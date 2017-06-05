@@ -1,0 +1,10 @@
+applications:
+- path: .
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: interface-zos
+  host: interface-zos
+  disk_quota: 1024M
+  services:
+  - interface-zos-cloudantNoSQLDB
