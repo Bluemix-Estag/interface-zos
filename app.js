@@ -78,7 +78,6 @@ function initCloudant() {
     });
     database = Cloudant.db.use(dbname);
 }
-// Create/check the document existance
 
 //Login endpoint
 app.post('/login', function (req, res) {
@@ -91,10 +90,12 @@ app.post('/login', function (req, res) {
             res.setHeader('Content-Type', 'application/json');
             res.status(500).json({ message: "An Error Has Ocurred", authenticated: false });
         } else {
+
             var login = req.body.login;
             var password = req.body.password;
             var exists = false;
             var userFound;
+
             for (var user in doc.users) {
                 console.log(doc.users[user]);
                 if (doc.users[user].username === login) {
@@ -108,6 +109,7 @@ app.post('/login', function (req, res) {
                     console.log("Authentication Success");
                     res.setHeader('Content-Type', 'application/json');
                     res.status(200).json({ message: "Authentication Success", authenticated: true });
+
                 } else {
                     console.log("Invalid Password");
                     res.setHeader('Content-Type', 'application/json');
@@ -119,18 +121,28 @@ app.post('/login', function (req, res) {
                 res.setHeader('Content-Type', 'application/json');
                 res.status(404).json({ message: "User Not Found", authenticated: false });
             }
-
         }
-
-
-
     });
-
 });
 
+app.get('/getCICSStatus',function(req,res){
+    var data = Math.ceil(Math.random() * 100);
+
+    res.send({status:data});
+});
+
+app.get('/getSaldo',function(req,res){
+    var acc = req.query.conta;
+
+    //call mainframe api and return balance
+});
+
+app.get('/getCredito', function(req,res){
+    var acc = req.query.conta;
 
 
-
+    //call mainframe api and return credit rate
+});
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function () {
     console.log('Express server listening on port ' + app.get('port'));
