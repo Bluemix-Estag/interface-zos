@@ -131,13 +131,12 @@
             var data =  { "login":  document.getElementById('username').value || null,
              "password" : document.getElementById('password').value || null};
             document.getElementById('submit-btn').innerHTML = '<img src="/images/loading.gif" style="width:30px;height:30px;">';
-            alert(JSON.stringify(data));
+            
             xhrPost('/login',data,function(response){
                 document.getElementById('submit-btn').innerHTML = 'Login';
-                alert('asd');
+                
                 if(response.authenticated){
-                    
-                    window.location = './index.html';
+                    window.location = '/index';
                 }else{
                     alert(JSON.stringify(response));
                 }
