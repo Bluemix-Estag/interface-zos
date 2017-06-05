@@ -124,22 +124,25 @@
         </footer>
     </div>
     
-    <script src="../public/scripts/util.js"></script>
+    <script src="/scripts/util.js"></script>
     <script>
         function getValidation(){
             
-            var data =  { login:  document.getElementById('username').value || null,
-             password : document.getElementById('password').value || null};
-            document.getElementById('submit-btn').innerHTML = '<img src="../public/images/loading.gif" style="width:30px;height:30px;">';
+            var data =  { "login":  document.getElementById('username').value || null,
+             "password" : document.getElementById('password').value || null};
+            document.getElementById('submit-btn').innerHTML = '<img src="/images/loading.gif" style="width:30px;height:30px;">';
+            alert(JSON.stringify(data));
             xhrPost('/login',data,function(response){
                 document.getElementById('submit-btn').innerHTML = 'Login';
+                alert('asd');
                 if(response.authenticated){
+                    
                     window.location = './index.html';
                 }else{
                     alert(JSON.stringify(response));
                 }
             },function(err){
-                
+                alert(err);
             })
         }
     </script>

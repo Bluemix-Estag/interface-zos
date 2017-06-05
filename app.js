@@ -4,6 +4,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var path = require('path');
 var app = express();
 var cfenv = require('cfenv');
 var fs = require('fs');
@@ -18,6 +19,13 @@ var appEnvOpts = {};
 
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/style', express.static(path.join(__dirname, '/views/style')));
+app.use('/scripts', express.static(path.join(__dirname, '/views/scripts')));
+
+
+
 app.set('port', process.env.PORT || 3000);
 
 fs.stat('./vcap-local.json', function (err, stat) {
@@ -79,23 +87,29 @@ function initCloudant() {
     database = Cloudant.db.use(dbname);
 }
 
+
+app.get('/',function(req,res){
+    res.render('login.html');
+})
+
+
 //Login endpoint
 app.post('/login', function (req, res) {
-
+    console.log('Login method invoked..')
     database.get('users', {
         revs_info: true
     }, function (err, doc) {
         if (err) {
             console.log(err);
             res.setHeader('Content-Type', 'application/json');
-            res.status(500).json({ message: "An Error Has Ocurred", authenticated: false });
+            res.status(500).json({ message: "An Error Has Ocurred", authenticated: false,status : 500 });
         } else {
-
+            // console.log('body'+ JSON.stringify(req.body));
             var login = req.body.login;
             var password = req.body.password;
             var exists = false;
             var userFound;
-
+            console.log('Received data: ',login);
             for (var user in doc.users) {
                 console.log(doc.users[user]);
                 if (doc.users[user].username === login) {
@@ -104,22 +118,22 @@ app.post('/login', function (req, res) {
                 }
             }
             if (exists) {
-                if (doc.users[userFound].username === login && doc.users[userFound].password === password) {
+                if (doc.users[userFound].username.localeCompare(login)==0 && doc.users[userFound].password.localeCompare(password)==0) {
 
                     console.log("Authentication Success");
                     res.setHeader('Content-Type', 'application/json');
-                    res.status(200).json({ message: "Authentication Success", authenticated: true });
+                    res.status(200).json({ message: "Authentication Success", authenticated: true , status:200});
 
                 } else {
                     console.log("Invalid Password");
                     res.setHeader('Content-Type', 'application/json');
-                    res.status(403).json({ message: "Invalid Password", authenticated: false });
+                    res.status(403).json({ message: "Invalid Password", authenticated: false, status:403 });
                 }
 
             } else {
                 console.log("User Not Found");
                 res.setHeader('Content-Type', 'application/json');
-                res.status(404).json({ message: "User Not Found", authenticated: false });
+                res.status(404).json({ message: "User Not Found", authenticated: false ,status: 404 });
             }
         }
     });
