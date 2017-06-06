@@ -1,146 +1,140 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html lang="pt">
+<html>
 
 <head>
-    <title>ZOS-Home</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/style/style.css" type="text/css" rel="stylesheet" />
-    <link href="/style/graph.css" type="text/css" rel="stylesheet" />
+    <style>
+        body {
+            overflow-y: hidden !important;
+            background-color: #303030;
+        }
+        
+        .tabs {
+            background-color: #651fff;
+        }
+        
+        .tabs li {
+            color: white;
+        }
+        
+        #test-swipe-2>div ,#test-swipe-3>div {
+            display: flex;
+            margin-top: 50px !important;
+            margin-bottom: 80px !important;
+            justify-content: space-around;
+            flex-direction: column;
+            height: 40% !important;
+        }
+        
+        #test-swipe-2 .card-content {
+            height: 120px;
+            !important;
+        }
+        
+        .card {
+            margin: 2% 10%;
+            width: 80% !important;
+            background-color: white !important;
+        }
+        
+        #card-conta {
+            margin-top: 10px !important;
+            background-color: white !important;
+            height: 240px !important;
+        }
+        
+        #card-rate {
+            background-color: white !important;
+            margin-top: 50px !important;
+            margin-bottom: 0;
+            height: 240px !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center !important;;
+        }
+        
+        #card-title1 {
+            margin-bottom: 50px !important;
+            margin-top: 10px !important;
+        }
+        
+        #sentiment_icon{
+            height: 100px !important;
+            margin-top: 10px !important;
+        }
+
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $('ul.tabs').tabs('select_tab', 'tab_id');
+        });
+
+    </script>
+
+
 </head>
 
-<script>
-    var donut = document.getElementById('donut');
-    var donutCtx = donut.getContext('2d');
-    var chart = new Chart(donutCtx).Doughnut([{
-        value: 101342,
-        color: '#1fc8f8'
-    }, {
-        value: 55342,
-        color: '#76a346'
-    }], {
-        percentageInnerCutout: 50,
-        animateScale: true,
-        segmentShowStroke: false,
-        animateRotate: false
-    });
-
-    var data = {
-        labels: ['12/12/2013', '13/12/2013', '14/12/2013', '14/12/2013', '15/12/2013', '16/12/2013', '17/12/2013'],
-        datasets: [{
-                data: [100, 210, 220, 300, 200, 190, 192],
-                fillColor: 'rgba(31,200,248,0.1)',
-                strokeColor: '#1fc8f8',
-                pointColor: '#1fc8f8',
-                pointStrokeColor: '#1fc8f8'
-            },
-            {
-                data: [130, 200, 190, 150, 140, 210, 0],
-                fillColor: 'rgba(118,163,70,0.1)',
-                strokeColor: '#76a346',
-                pointColor: '#76a346',
-                pointStrokeColor: '#76a346'
-            }
-        ]
-    };
-
-    var line = document.getElementById('line');
-    var lineCtx = line.getContext('2d');
-    var chart1 = new Chart(lineCtx).Line(data);
-
-    var line2 = document.getElementById('line2');
-    var line2Ctx = line2.getContext('2d');
-    var chart2 = new Chart(line2Ctx).Line(data);
-
-</script>
-
 <body>
-    <!--  Page1 -->
-    <div id="status" data-role="page" class="single-page">
-        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
-            <h1>ZOS-Status</h1>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#status" data-transition="none"><i class="material-icons" onclick="aler()">info_outline</i></a></li>
-                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
-                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
-                </ul>
+    <div class="page-bodys">
+
+        <ul id="tabs-swipe-demo" class="tabs">
+            <li class="tab col s3"><a href="#test-swipe-1" style="color:white;"><i class="material-icons">info_outline</i></a></li>
+            <li class="tab col s3"><a class="active" href="#test-swipe-2" style="color:white;"><i class="material-icons">account_balance_wallet</i></a></li>
+            <li class="tab col s3"><a href="#test-swipe-3" style="color:white;"><i class="material-icons">trending_up</i></a></li>
+        </ul>
+        <div id="test-swipe-1">
+<!--            <p>Todo</p>-->
+        </div>
+        <div id="test-swipe-2">
+            
+ <div class="card">
+            <div class="card-content" id="card-conta">
+                <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
+                <p class="z-depth-1" style="width: 150px !important;"><a href="#">Conta: xxx.xxx.xxx-xx</a></p>
+            </div>
+
+            </div>
+            <div class="card">
+
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Seu Saldo<i class="material-icons right">more_vert</i></span>
+
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">Saldo<i class="material-icons right">close</i></span>
+                    <p><span style="color:green">R$1000,00</span></p>
+                </div>
             </div>
         </div>
-
-        <div role="main" class="ui-content page-body">
-            <h2 class="mc-text-top"><b>Status</b></h2>
+        <div id="test-swipe-3">
+            <div class="card">
+            <div class="card-content" id="card-conta">
+                <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
+                <p class="z-depth-1" style="width: 150px !important;"><a href="#">Conta: xxx.xxx.xxx-xx</a></p>
+            </div>
         </div>
         
-
-        <footer data-role="footer" data-theme="b" class="page-footer">
-            <h4>Hybrid Cloud</h4>
-        </footer>
-
-    </div>
-
-    <!-- balance -->
-    <div id="balance" data-role="page" class="single-page">
-        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
-            <h1>ZOS-Balance</h1>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#status" data-transition="none"><i class="material-icons">info_outline</i></a></li>
-                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
-                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
-                </ul>
+        <div class="card">
+            <div class="card-content" id="card-rate">
+                <span class="card-title activator grey-text text-darken-4" >Seu Rate</span>
+                <p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">5</a></p>
+                <p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p>
             </div>
         </div>
-
-
-        <div role="main" class="ui-content page-body">
-            <h2 class="mc-text-top"><b>Balance</b></h2>
-            <p></p>
         </div>
-
-
-        <footer data-role="footer" data-theme="b" class="page-footer">
-            <h4>Hybrid Cloud</h4>
-        </footer>
+        
     </div>
 
 
-    <!-- credit-rate -->
-    <div id="credit-rate" data-role="page" class="single-page">
-        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
-            <h1>ZOS-Credit Rate</h1>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#status" data-transition="none"><i class="material-icons">info_outline</i></a></li>
-                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
-                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <div role="main" class="ui-content page-body">
-            <h2 class="mc-text-top"><b>Credit-rate</b></h2>
-
-        </div>
-
-
-        <footer data-role="footer" data-theme="b" class="page-footer">
-            <h4>Hybrid Cloud</h4>
-        </footer>
-    </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script>
+        
+    
+    </script>
 </body>
 
 </html>

@@ -96,6 +96,9 @@ app.get('/index',function(req,res){
     res.render('index.html');
 })
 
+app.get('/teste', function(req,res){
+    res.render('teste.html');
+})
 //Login endpoint
 app.post('/login', function (req, res) {
     console.log('Login method invoked..')

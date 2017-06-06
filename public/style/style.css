@@ -1,12 +1,4 @@
-.mc-text-center {
-    text-align: center;
-}
 
-.mc-text-top {
-    text-align: center;
-    position: relative;
-    top: 0;
-}
 
 * {
     margin: 0;
@@ -15,6 +7,7 @@
 
 html,
 body {
+    
     height: 100%;
     width: 100%;
     padding: 0;
@@ -22,19 +15,26 @@ body {
 }
 
 .page-header {
-    height: 5%;
+/*    height: 5%;*/
     margin: 0;
     padding: 0;
 }
 
-.page-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    height: 90%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.page-bodys {
+    height: auto;
+    width: auto;
+}
+.page-bodys > div {
+    margin-bottom: 220px !important;
+}
+.page-body h2{
+    text-align: center ;
+    font-size: 18pt;
+    color: #fff;
+    font-family: 'Rubik';
+}
+.balance-body{
+    justify-content: space-around;
 }
 
 .page-body * {
@@ -49,92 +49,24 @@ body {
 }
 
 .page-footer {
-    margin: 0;
-    padding: 0;
-    height: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 100% !important;
+    bottom: 0 !important;
+    background-color: #1d1d1d !important;
+/*    height: 5%;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
 }
 
 .single-page {
+    background-color: #303030;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.row:not(:last-child) {
-    border-bottom: 1px solid #ccc;
-}
-
-.circle-progress {
-    border-right: 1px solid #ccc;
-}
-
-.individual {
-    padding-left: 20px;
-}
-
-.intern {
-    display: flex;
-    flex-direction: row;
-}
-
-.intern div {
-    margin-right: 23px;
-}
-
-.all {
-    width: 200px;
-}
-
-.details {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.details p {
-    padding: 0;
-    margin: 0;
-}
-
-.presentation {
-    padding-top: 10px;
-    padding-left: 94px;
-    border-right: 1px solid #ccc;
-}
-
-.programming {
-    padding-top: 10px;
-    padding-left: 105px;
-    border-right: 1px solid #ccc;
-}
-
-.courses {
-    padding-top: 10px;
-    padding-left: 98px;
 }
 
 
-/*  Timeline custom css */
 
-.vis-item.high-priority {
-    color: white;
-    background-color: #dd2929;
-    border-color: #dd2929;
-}
 
-.vis-item.medium-priority {
-    color: white;
-    background-color: green;
-    border-color: green;
-}
-
-.vis-item.low-priority {
-    color: white;
-    background-color: #6753ff;
-    border-color: #6753ff;
-}
