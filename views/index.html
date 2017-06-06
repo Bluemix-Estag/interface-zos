@@ -1,108 +1,146 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html lang="pt">
-    <head>
-        <title>ZOS-Home</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css">
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
-        
-   
-    </head>
-    <body>
-        <!-- Home Page -->
-        <div data-role="page" id="status">
-            <header data-role="header" data-theme="b">
-            </header>
-                <div data-role="navbar">
+
+<head>
+    <title>ZOS-Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/style/style.css" type="text/css" rel="stylesheet" />
+    <link href="/style/graph.css" type="text/css" rel="stylesheet" />
+</head>
+
+<script>
+    var donut = document.getElementById('donut');
+    var donutCtx = donut.getContext('2d');
+    var chart = new Chart(donutCtx).Doughnut([{
+        value: 101342,
+        color: '#1fc8f8'
+    }, {
+        value: 55342,
+        color: '#76a346'
+    }], {
+        percentageInnerCutout: 50,
+        animateScale: true,
+        segmentShowStroke: false,
+        animateRotate: false
+    });
+
+    var data = {
+        labels: ['12/12/2013', '13/12/2013', '14/12/2013', '14/12/2013', '15/12/2013', '16/12/2013', '17/12/2013'],
+        datasets: [{
+                data: [100, 210, 220, 300, 200, 190, 192],
+                fillColor: 'rgba(31,200,248,0.1)',
+                strokeColor: '#1fc8f8',
+                pointColor: '#1fc8f8',
+                pointStrokeColor: '#1fc8f8'
+            },
+            {
+                data: [130, 200, 190, 150, 140, 210, 0],
+                fillColor: 'rgba(118,163,70,0.1)',
+                strokeColor: '#76a346',
+                pointColor: '#76a346',
+                pointStrokeColor: '#76a346'
+            }
+        ]
+    };
+
+    var line = document.getElementById('line');
+    var lineCtx = line.getContext('2d');
+    var chart1 = new Chart(lineCtx).Line(data);
+
+    var line2 = document.getElementById('line2');
+    var line2Ctx = line2.getContext('2d');
+    var chart2 = new Chart(line2Ctx).Line(data);
+
+</script>
+
+<body>
+    <!--  Page1 -->
+    <div id="status" data-role="page" class="single-page">
+        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
+            <h1>ZOS-Status</h1>
+            <div data-role="navbar">
                 <ul>
-                    <li><a href="#status" data-transition="none" data-icon="home" id="home-button">Status</a></li>
-                    <li><a href="#balance" data-transition="none" data-icon="plus" id="courses-button">Balance</a></li>
-                    <li><a href="#credit-rate" data-transition="none" data-icon="plus" id="courses-button">Credit Rate</a></li>
+                    <li><a href="#status" data-transition="none"><i class="material-icons" onclick="aler()">info_outline</i></a></li>
+                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
+                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
                 </ul>
-                </div>
-                  
-            
-            <div id="container">
-                <div data-role="content" id="home-content">
-                    
-                    
-                    <h1>Status</h1>
-                    
-                </div>
             </div>
-            
-            <footer data-role="footer" data-theme="b">
-                <h4>Hybrid-Cloud</h4>
-            </footer>
-    </div>
+        </div>
+
+        <div role="main" class="ui-content page-body">
+            <h2 class="mc-text-top"><b>Status</b></h2>
+        </div>
         
-        <!-- Page2 -->
-        <div data-role="page" id="balance">
-            <header data-role="header" data-theme="b">
-            </header>
-                <div data-role="navbar">
+
+        <footer data-role="footer" data-theme="b" class="page-footer">
+            <h4>Hybrid Cloud</h4>
+        </footer>
+
+    </div>
+
+    <!-- balance -->
+    <div id="balance" data-role="page" class="single-page">
+        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
+            <h1>ZOS-Balance</h1>
+            <div data-role="navbar">
                 <ul>
-                    <li><a href="#status" data-transition="none" data-icon="home" id="home-button">Status</a></li>
-                    <li><a href="#balance" data-transition="none" data-icon="plus" id="courses-button">Balance</a></li>
-                    <li><a href="#credit-rate" data-transition="none" data-icon="plus" id="courses-button">Credit Rate</a></li>
+                    <li><a href="#status" data-transition="none"><i class="material-icons">info_outline</i></a></li>
+                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
+                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
                 </ul>
-                </div>
-                  
-            
-            <div id="container">
-                <div data-role="content" id="main-content">
-                    
-                <p>Balance</p>    
-                
-                </div>
             </div>
-            
-            
-   
-        
-        
-            <footer data-role="footer" data-theme="b">
-                <h4>Hybrid-Cloud</h4>
-            </footer>
+        </div>
+
+
+        <div role="main" class="ui-content page-body">
+            <h2 class="mc-text-top"><b>Balance</b></h2>
+            <p></p>
+        </div>
+
+
+        <footer data-role="footer" data-theme="b" class="page-footer">
+            <h4>Hybrid Cloud</h4>
+        </footer>
     </div>
-        
-        <!-- Page3 -->
-        <div data-role="page" id="credit-rate">
-            <header data-role="header" data-theme="b">
-            </header>
-                <div data-role="navbar">
+
+
+    <!-- credit-rate -->
+    <div id="credit-rate" data-role="page" class="single-page">
+        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
+            <h1>ZOS-Credit Rate</h1>
+            <div data-role="navbar">
                 <ul>
-                    <li><a href="#status" data-transition="none" data-icon="home" id="home-button">Status</a></li>
-                    <li><a href="#balance" data-transition="none" data-icon="plus" id="courses-button">Balance</a></li>
-                    <li><a href="#credit-rate" data-transition="none" data-icon="plus" id="courses-button">Credit Rate</a></li>
+                    <li><a href="#status" data-transition="none"><i class="material-icons">info_outline</i></a></li>
+                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
+                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
                 </ul>
-                </div>
-                  
-            
-            <div id="container">
-                <div data-role="content" id="main-content">
-                    
-                <p>Credit Rate</p>    
-                
-                </div>
             </div>
-            
-            
-   
-        
-        
-            <footer data-role="footer" data-theme="b">
-                <h4>Hybrid-Cloud</h4>
-            </footer>
+        </div>
+
+
+        <div role="main" class="ui-content page-body">
+            <h2 class="mc-text-top"><b>Credit-rate</b></h2>
+
+        </div>
+
+
+        <footer data-role="footer" data-theme="b" class="page-footer">
+            <h4>Hybrid Cloud</h4>
+        </footer>
     </div>
-    </body>
+
+</body>
+
 </html>
