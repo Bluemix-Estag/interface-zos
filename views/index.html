@@ -37,9 +37,10 @@
         }
         
         .card {
-            margin: 2% 10%;
+            margin: 1% 10% !important;
             width: 80% !important;
             background-color: white !important;
+            
         }
         
         #card-conta {
@@ -51,7 +52,7 @@
         #card-rate {
             background-color: white !important;
             margin-top: 10px !important;
-            margin-bottom: 0;
+            margin-bottom: 0 !important;
             height: 240px !important;
             display: flex;
             flex-direction: column;
@@ -69,34 +70,36 @@
             height: 100px !important;
             margin-top: 10px !important;
         }
-
-        #submit-btn{
+        
+        #submit-btn {
             background-color: #6a1b9a !important;
         }
-
+        
         .input-field input[type=text]:focus {
             border-bottom: 1px solid #6a1b9a;
             box-shadow: 0 1px 0 0 #000;
         }
-
+        
         .input-field .prefix.active {
             color: #6a1b9a;
         }
-
+        
         .input-field input[type=text].valid {
             border-bottom: 1px solid #6a1b9a !important;
             box-shadow: 0 1px 0 0 #000 !important;
         }
-
+        
         .input-field input[type=text]:focus+label {
             color: #6a1b9a;
         }
+
     </style>
 
     <script>
         $(document).ready(function() {
             $('ul.tabs').tabs('select_tab', 'tab_id');
         });
+
     </script>
 
 
@@ -142,7 +145,9 @@
             <div class="card">
                 <div class="card-content" id="card-conta">
                     <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
-                    <p class="z-depth-1" style="width: 150px !important;" id="valor_conta">Conta:<a href="#" id="valor_conta"></a></p>
+                    <p class="z-depth-1" style="width: 150px !important;" id="valor_conta">Conta:
+                        <a href="#" id="valor_conta"></a>
+                    </p>
                 </div>
             </div>
 
@@ -154,13 +159,17 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script src="/scripts/util.js">
+
+
     </script>
     <script>
         var logged;
+
+       
         
-        $('#close_icon').click(function(){
-           $('#card_do_saldo').html(''); 
-        });
+        function closeBtn(){
+            $('#card_do_saldo').html('');
+        }
 
         function getAccount() {
 
@@ -169,23 +178,21 @@
             };
 
             if (data.conta.localeCompare('1234') == 0) {
-                document.getElementById('card_do_saldo').innerHTML = '<div class="card-content activator" id="activator_card"><span class="card-title activator grey-text text-darken-4" id="activator_card">Seu Saldo<i class="material-icons right" id="close_icon">close</i><i class="material-icons activator right">more_vert</i></span></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">Saldo<i class="material-icons right">close</i></span><p id="saldo">Conta não identificada.</p></div>';
-                
-                $('activator_card').click();
-                
+                document.getElementById('card_do_saldo').innerHTML = '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><a href="#" onclick="closeBtn()" style="color: #6a1b9a !important"><i class="material-icons right" id="closeid">close</i></button><span class="black-text" id="saldo"><h4>Saldo</h4><p style="color: green !important">R$1000,00<p></span></div>';
+
+                document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#" style="color: #6a1b9a">1234</a>';
+                document.getElementById('card-rate1').innerHTML = '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-1">Seu Rate</span><p class="z-depth-0" style="width: 150px !important; text-align:center !important; font-size: 22pt;"><a href="#" style="color:#6a1b9a ">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon" style="color: #6a1b9a !important ">sentiment_satisfied</i></a></p></div>';
+
+                document.getElementById('saldo').innerHTML = '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$1000,00<p></span>';
+                logged = true;
+
+            } else if (data.conta.localeCompare('4321') == 0) {
+                document.getElementById('card_do_saldo').innerHTML = '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><a href="#" onclick="closeBtn()" style="color: #6a1b9a !important"><i class="material-icons right" id="closeid">close</i></button><span class="black-text" id="saldo"><h4>Saldo</h4><p style="color: green !important">R$1000,00<p></span></div>';
+
                 document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">1234</a>';
                 document.getElementById('card-rate1').innerHTML = '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
-                
-                document.getElementById('saldo').innerHTML = '<span style="color:green">R$1000,00</span>';
-                logged = true;
-                
-            } else if (data.conta.localeCompare('4321') == 0) {
-                document.getElementById('card_do_saldo').innerHTML = '<div class="card-content"><span class="card-title activator grey-text text-darken-4">Seu Saldo<i class="material-icons right" id="close_icon">close</i><i class="material-icons activator right">more_vert</i></span></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">Saldo<i class="material-icons right">close</i></span><p id="saldo">Conta não identificada.</p></div>';
-                
-                document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">4321</a>';
-                document.getElementById('card-rate1').innerHTML = '<div class="card-content" id="card-rate"><span class="card-title activator grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">2</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_dissatisfied</i></a></p></div>';
-                
-                document.getElementById('saldo').innerHTML = '<span style="color:green">R$200,00</span>';
+
+                document.getElementById('saldo').innerHTML = '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$200,00<p></span>';
                 logged = true;
             }
 
@@ -214,7 +221,7 @@
             var pageName = pageSplit[pageSplit.length - 1];
 
             if (sessionCheck('user')) {
-
+                
             } else {
                 if (pageName == 'index') {
                     window.location = '/';
@@ -225,12 +232,23 @@
         checkLoggedUser();
 
         function logout() {
-            window.confirm("Deseja realizar logout?");
-            if (confirm) {
+            
+            if (confirm('Deseja efetuar logout?') == true) {
                 deleteSession('user');
                 window.location = '/';
             }
         }
+
+        function eventFire(el, etype) {
+            if (el.fireEvent) {
+                el.fireEvent('on' + etype);
+            } else {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent(etype, true, false);
+                el.dispatchEvent(evObj);
+            }
+        }
+
     </script>
 </body>
 
