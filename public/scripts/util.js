@@ -123,3 +123,100 @@ function objectToQuery(map){
 	return pairs.join("&");
 }
 
+
+
+
+
+function setSession(name, value) {
+	if (typeof(Storage) !== "undefined") {
+		// Code for localStorage/sessionStorage.
+		sessionStorage.setItem(name, value);
+	}
+	else {
+		// Sorry! No Web Storage support.. use cookie instead..
+		setCookie(name, value);
+
+	}
+}
+
+
+function setCookie(cname, cvalue) {
+	var d = new Date();
+	d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
+	var expires = "expires=" + d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+
+function getSession(name) {
+	if (typeof(Storage) !== "undefined") {
+		// Code for localStorage/sessionStorage.
+		return sessionStorage.getItem(name);
+	}
+	else {
+		// Sorry! No Web Storage support.. use cookie instead..
+		return getCookie(name);
+	}
+}
+
+
+
+function sessionCheck(name) {
+	
+	if (typeof(Storage) !== "undefined") {
+		if(sessionStorage.getItem(name)){
+			return true;
+		}
+		return false;
+		// return sessionStorage.user != null && sessionStorage.user != '' && sessionStorage.user !== "undefined";
+	}
+	else {
+		//No storage , use cookie..
+		return checkCookie(name);
+	}
+}
+
+
+
+function getCookie(cname) {
+	name = name + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+
+}
+
+function checkCookie(cname) {
+	var username = getCookie(cname);
+
+	if (username != "" && username != null) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+function deleteSession(name) {
+	if (typeof(Storage) !== "undefined") {
+		sessionStorage.removeItem(name);
+	}
+	else {
+		deleteCookie(name);
+	}
+}
+
+function deleteCookie(cname) {
+	document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+

@@ -2,9 +2,11 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>ZOS</title>
     <style>
         body {
             overflow-y: hidden !important;
@@ -19,7 +21,8 @@
             color: white;
         }
         
-        #test-swipe-2>div ,#test-swipe-3>div {
+        #test-swipe-2>div,
+        #test-swipe-3>div {
             display: flex;
             margin-top: 50px !important;
             margin-bottom: 80px !important;
@@ -47,32 +50,31 @@
         
         #card-rate {
             background-color: white !important;
-            margin-top: 50px !important;
+            margin-top: 10px !important;
             margin-bottom: 0;
             height: 240px !important;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center !important;;
+            justify-content: center !important;
+            ;
         }
         
         #card-title1 {
-            margin-bottom: 50px !important;
+            margin-bottom: 20px !important;
             margin-top: 10px !important;
         }
         
-        #sentiment_icon{
+        #sentiment_icon {
             height: 100px !important;
             margin-top: 10px !important;
         }
-
     </style>
 
     <script>
         $(document).ready(function() {
             $('ul.tabs').tabs('select_tab', 'tab_id');
         });
-
     </script>
 
 
@@ -82,23 +84,37 @@
     <div class="page-bodys">
 
         <ul id="tabs-swipe-demo" class="tabs">
-            <li class="tab col s3"><a href="#test-swipe-1" style="color:white;"><i class="material-icons">info_outline</i></a></li>
+            <li class="tab col s3"><a href="#test-swipe-1" style="color:white;"><i class="material-icons">trending_up</i></a></li>
             <li class="tab col s3"><a class="active" href="#test-swipe-2" style="color:white;"><i class="material-icons">account_balance_wallet</i></a></li>
-            <li class="tab col s3"><a href="#test-swipe-3" style="color:white;"><i class="material-icons">trending_up</i></a></li>
+            <li class="tab col s3"><a href="#test-swipe-3" style="color:white;"><i class="material-icons">info_outline</i></a></li>
+            <li class="tab col s3 right"><a href="#test-swipe-3" onclick="logout()" style="color:white;"><i class="material-icons">exit_to_app</i></a></li>
+
         </ul>
         <div id="test-swipe-1">
-<!--            <p>Todo</p>-->
+            <!--            <p>Todo</p>-->
         </div>
         <div id="test-swipe-2">
-            
- <div class="card">
-            <div class="card-content" id="card-conta">
-                <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
-                <p class="z-depth-1" style="width: 150px !important;"><a href="#">Conta: xxx.xxx.xxx-xx</a></p>
-            </div>
+
+            <div class="card">
+                <div class="card-content" id="card-conta">
+                    <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
+                    <div class="response">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">supervisor_account</i>
+                            <input id="conta" type="text" class="validate">
+                            <label for="icon_prefix">Conta</label>
+                        </div>
+                        <div class="input-field col s4 offset-s4">
+                            <i class="material-icons prefix"></i>
+                            <button class="btn waves-effect waves-light" type="submit" name="action" id="submit-btn" onclick="getAccount()">Submit<i class="material-icons right">send</i></button>
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
-            <div class="card">
+            <div class="card" id="card_do_saldo">
 
                 <div class="card-content">
                     <span class="card-title activator grey-text text-darken-4">Seu Saldo<i class="material-icons right">more_vert</i></span>
@@ -106,34 +122,92 @@
                 </div>
                 <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">Saldo<i class="material-icons right">close</i></span>
-                    <p><span style="color:green">R$1000,00</span></p>
+                    <p id="saldo">Conta não identificada.</p>
                 </div>
             </div>
         </div>
         <div id="test-swipe-3">
             <div class="card">
-            <div class="card-content" id="card-conta">
-                <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
-                <p class="z-depth-1" style="width: 150px !important;"><a href="#">Conta: xxx.xxx.xxx-xx</a></p>
+                <div class="card-content" id="card-conta">
+                    <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
+                    <p class="z-depth-1" style="width: 150px !important;"><a href="#">Conta: xxx.xxx.xxx-xx</a></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content" id="card-rate">
+                    <span class="card-title activator grey-text text-darken-4">Seu Rate</span>
+                    <p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">5</a></p>
+                    <p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p>
+                </div>
             </div>
         </div>
-        
-        <div class="card">
-            <div class="card-content" id="card-rate">
-                <span class="card-title activator grey-text text-darken-4" >Seu Rate</span>
-                <p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">5</a></p>
-                <p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p>
-            </div>
-        </div>
-        </div>
-        
+
     </div>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script src="/scripts/util.js">
+    </script>
     <script>
-        
-    
+        var logged;
+
+        function getAccount() {
+
+            var data = {
+                "conta": document.getElementById('conta').value || null,
+            };
+
+            if (data.conta.localeCompare('1234') == 0) {
+                document.getElementById('saldo').innerHTML = '<span style="color:green">R$1000,00</span>';
+                logged = true;
+            } else if (data.conta.localeCompare('4321') == 0) {
+                document.getElementById('saldo').innerHTML = '<span style="color:green">R$2000,00</span>';
+                logged = true;
+            }
+
+
+
+            btn.innerHTML = '<div class="progress" style="width:50px; !important;"><div class="indeterminate"></div></div>">';
+            xhrPost('/login', data, function(response) {
+
+
+                    if (response.authenticated) {
+                        setSession("user", data.login);
+                        window.location = '/index';
+                    } else {
+                        alert(JSON.stringify(response));
+                    }
+                },
+                function(err) {
+                    btn.style.paddingTop = '0px';
+                    btn.innerHTML = 'Submit<i class="material-icons right">send</i>'
+                    alert(err);
+                })
+        }
+
+        function checkLoggedUser() {
+            var pageSplit = location.pathname.split('/');
+            var pageName = pageSplit[pageSplit.length - 1];
+
+            if (sessionCheck('user')) {
+
+            } else {
+                if (pageName == 'index') {
+                    window.location = '/';
+                }
+            }
+        }
+
+        checkLoggedUser();
+
+        function logout() {
+            window.confirm("Deseja realizar logout?");
+            if (confirm) {
+                deleteSession('user');
+                window.location = '/';
+            }
+        }
     </script>
 </body>
 

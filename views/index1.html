@@ -10,113 +10,43 @@ and open the template in the editor.
     <title>ZOS-Home</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/style/style.css" type="text/css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .tap-target{
+            background-color: blue !important;
+            border-radius: 0 !important;
+        }
+    </style>
 </head>
 
 <body>
-    <!--  Page1 -->
-    <div id="status" data-role="page" class="single-page">
-        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
-            <h1>ZOS-Status</h1>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#status" data-transition="none"><i class="material-icons" onclick="aler()">info_outline</i></a></li>
-                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
-                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
-                </ul>
-            </div>
+    <a id="menu" class="waves-effect waves-light btn btn-floating" onclick="menuToggle()"><i class="material-icons">menu</i></a>
+
+    <!-- Tap Target Structure -->
+    <div class="tap-target" data-activates="menu">
+        <div class="tap-target-content">
+            <h5>Saldo</h5>
+            <p>Conta não selecionada.</p>
         </div>
-
-        <div role="main" class="ui-content page-body">
-            <h2><b>Status</b></h2>
-
-        </div>
-
-
-        <footer data-role="footer" data-theme="b" class="page-footer">
-            <h4>Hybrid Cloud</h4>
-        </footer>
-
     </div>
 
-    <!-- balance -->
-    <div id="balance" data-role="page" class="single-page">
-        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
-            <h1>ZOS-Balance</h1>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#status" data-transition="none"><i class="material-icons">info_outline</i></a></li>
-                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
-                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
-                </ul>
-            </div>
-        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script>
+        var open = false;
+        function menuToggle(){
+            if(open){
+                 $('.tap-target').tapTarget('close');
+                open = false;
+            }else{
+                        $('.tap-target').tapTarget('open');
+                open = true;
+            }
+        }
 
 
-     
-        <div role="main" class="ui-content page-bodys">
-         
-  <div class="card">
-  
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">Sua Conta</span>
-      <p><a href="#">Conta: xxx.xxx.xxx-xx</a></p>
-    </div>
-    
-  </div>
-            <div class="card">
-  
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">Seu Saldo<i class="material-icons right">more_vert</i></span>
-      
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Saldo<i class="material-icons right">close</i></span>
-      <p><span style="color:green">R$1000,00</span></p>
-    </div>
-  </div>
-        </div>
-
-
-        <footer data-role="footer" data-theme="b" class="page-footer">
-            <h4>Hybrid Cloud</h4>
-        </footer>
-
-    </div>
-    <!-- credit-rate -->
-    <div id="credit-rate" data-role="page" class="single-page">
-        <div data-role="header" data-theme="b" style="background-color:#1d1d1d;" class="page-header">
-            <h1>ZOS-Credit Rate</h1>
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#status" data-transition="none"><i class="material-icons">info_outline</i></a></li>
-                    <li><a href="#balance" data-transition="none"><i class="material-icons">account_balance_wallet</i></a></li>
-                    <li><a href="#credit-rate" data-transition="none"><i class="material-icons">trending_up</i></a></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <div role="main" class="ui-content page-body">
-            <h2 class="mc-text-top"><b>Credit-rate</b></h2>
-
-        </div>
-
-
-        <footer data-role="footer" data-theme="b" class="page-footer">
-            <h4>Hybrid Cloud</h4>
-        </footer>
-    </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-          
+    </script>
 </body>
 
 </html>

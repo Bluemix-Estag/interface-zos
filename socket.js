@@ -1,68 +1,19 @@
-/**
- * Module dependencies.
- */
-
 var express = require('express');
-var routes = require('./routes');
-var path = require('path');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 var cfenv = require('cfenv');
 var fs = require('fs');
-
 var bodyParser = require('body-parser');
-var http = require('http');
 
-// load local VCAP configuration
-var vcapLocal = null;
-var appEnv = null;
-var appEnvOpts = {};
+
 
 app.use(bodyParser.json());
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/style', express.static(path.join(__dirname, '/views/style')));
-app.use('/scripts', express.static(path.join(__dirname, '/views/scripts')));
-
 
 
 app.set('port', process.env.PORT || 3000);
 
-fs.stat('./vcap-local.json', function (err, stat) {
-    if (err && err.code === 'ENOENT') {
-        // file does not exist
-        console.log('No vcap-local.json');
-        initializeAppEnv();
-    } else if (err) {
-        console.log('Error retrieving local vcap: ', err.code);
-    } else {
-        vcapLocal = require("./vcap-local.json");
-        console.log("Loaded local VCAP", vcapLocal);
-        appEnvOpts = {
-            vcap: vcapLocal
-        };
-        initializeAppEnv();
-    }
-});
-
-
-// get the app environment from Cloud Foundry, defaulting to local VCAP
-function initializeAppEnv() {
-    appEnv = cfenv.getAppEnv(appEnvOpts);
-    if (appEnv.isLocal) {
-        require('dotenv').load();
-    }
-    if (appEnv.services.cloudantNoSQLDB) {
-        initCloudant();
-    } else {
-        console.error("No Cloudant service exists.");
-    }
-}
-
-
-// =====================================
-// CLOUDANT SETUP ======================
-// =====================================
 var dbname = "data";
 var database;
 
@@ -88,19 +39,7 @@ function initCloudant() {
 }
 
 
-app.get('/index',function(req,res){
-    res.render('index.html');
-})
-
-app.get('/',function(req,res){
-    res.render('login.html');
-})
-
-app.get('/teste', function(req,res){
-    res.render('teste.html');
-})
-//Login endpoint
-app.post('/login', function (req, res) {
+app.post('/info', function (req, res) {
     console.log('Login method invoked..')
     database.get('users', {
         revs_info: true
@@ -145,25 +84,6 @@ app.post('/login', function (req, res) {
     });
 });
 
-app.get('/getCICSStatus',function(req,res){
-    var data = Math.ceil(Math.random() * 100);
 
-    res.send({status:data});
-});
-
-app.get('/getSaldo',function(req,res){
-    var acc = req.query.conta;
-
-    //call mainframe api and return balance
-});
-
-app.get('/getCredito', function(req,res){
-    var acc = req.query.conta;
-
-
-    //call mainframe api and return credit rate
-});
-
-http.createServer(app).listen(app.get('port'), '0.0.0.0', function () {
-    console.log('Express server listening on port ' + app.get('port'));
-});
+app.listen(3000);
+console.log('Listening on port 3000');

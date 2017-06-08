@@ -108,11 +108,12 @@
             btn.innerHTML = '<div class="progress" style="width:50px; !important;"><div class="indeterminate"></div></div>">';
             xhrPost('/login', data, function(response) {
 
+
                 if (response.authenticated) {
+                    setSession("user", data.login);
                     window.location = '/index';
                 } else {
                     btn.style.paddingTop = '0px';
-                    alert(JSON.stringify(response));
                 }
             }, function(err) {
                 btn.style.paddingTop = '0px';
@@ -120,6 +121,25 @@
                 alert(err);
             })
         }
+
+
+        function checkLoggedUser() {
+            var pageSplit = location.pathname.split('/');
+            var pageName = pageSplit[pageSplit.length - 1];
+
+            if (sessionCheck('user')) {
+                if (pageName == '') {
+                    window.location = '/index';
+                }
+
+            } else {
+                if (pageName == '') {
+
+                }
+            }
+        }
+
+        checkLoggedUser();
 
     </script>
 
