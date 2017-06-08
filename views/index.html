@@ -14,7 +14,7 @@
         }
         
         .tabs {
-            background-color: #651fff;
+            background-color: #6a1b9a;
         }
         
         .tabs li {
@@ -69,6 +69,28 @@
             height: 100px !important;
             margin-top: 10px !important;
         }
+
+        #submit-btn{
+            background-color: #6a1b9a !important;
+        }
+
+        .input-field input[type=text]:focus {
+            border-bottom: 1px solid #6a1b9a;
+            box-shadow: 0 1px 0 0 #000;
+        }
+
+        .input-field .prefix.active {
+            color: #6a1b9a;
+        }
+
+        .input-field input[type=text].valid {
+            border-bottom: 1px solid #6a1b9a !important;
+            box-shadow: 0 1px 0 0 #000 !important;
+        }
+
+        .input-field input[type=text]:focus+label {
+            color: #6a1b9a;
+        }
     </style>
 
     <script>
@@ -114,33 +136,17 @@
                 </div>
 
             </div>
-            <div class="card" id="card_do_saldo">
-
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">Seu Saldo<i class="material-icons right">more_vert</i></span>
-
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">Saldo<i class="material-icons right">close</i></span>
-                    <p id="saldo">Conta não identificada.</p>
-                </div>
-            </div>
+            <div class="card" id="card_do_saldo"></div>
         </div>
         <div id="test-swipe-3">
             <div class="card">
                 <div class="card-content" id="card-conta">
                     <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
-                    <p class="z-depth-1" style="width: 150px !important;"><a href="#">Conta: xxx.xxx.xxx-xx</a></p>
+                    <p class="z-depth-1" style="width: 150px !important;" id="valor_conta">Conta:<a href="#" id="valor_conta"></a></p>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-content" id="card-rate">
-                    <span class="card-title activator grey-text text-darken-4">Seu Rate</span>
-                    <p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">5</a></p>
-                    <p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p>
-                </div>
-            </div>
+            <div class="card" id="card-rate1"></div>
         </div>
 
     </div>
@@ -151,6 +157,10 @@
     </script>
     <script>
         var logged;
+        
+        $('#close_icon').click(function(){
+           $('#card_do_saldo').html(''); 
+        });
 
         function getAccount() {
 
@@ -159,10 +169,23 @@
             };
 
             if (data.conta.localeCompare('1234') == 0) {
+                document.getElementById('card_do_saldo').innerHTML = '<div class="card-content activator" id="activator_card"><span class="card-title activator grey-text text-darken-4" id="activator_card">Seu Saldo<i class="material-icons right" id="close_icon">close</i><i class="material-icons activator right">more_vert</i></span></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">Saldo<i class="material-icons right">close</i></span><p id="saldo">Conta não identificada.</p></div>';
+                
+                $('activator_card').click();
+                
+                document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">1234</a>';
+                document.getElementById('card-rate1').innerHTML = '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
+                
                 document.getElementById('saldo').innerHTML = '<span style="color:green">R$1000,00</span>';
                 logged = true;
+                
             } else if (data.conta.localeCompare('4321') == 0) {
-                document.getElementById('saldo').innerHTML = '<span style="color:green">R$2000,00</span>';
+                document.getElementById('card_do_saldo').innerHTML = '<div class="card-content"><span class="card-title activator grey-text text-darken-4">Seu Saldo<i class="material-icons right" id="close_icon">close</i><i class="material-icons activator right">more_vert</i></span></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">Saldo<i class="material-icons right">close</i></span><p id="saldo">Conta não identificada.</p></div>';
+                
+                document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">4321</a>';
+                document.getElementById('card-rate1').innerHTML = '<div class="card-content" id="card-rate"><span class="card-title activator grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">2</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_dissatisfied</i></a></p></div>';
+                
+                document.getElementById('saldo').innerHTML = '<span style="color:green">R$200,00</span>';
                 logged = true;
             }
 

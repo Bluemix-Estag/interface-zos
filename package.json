@@ -17,7 +17,8 @@
     "html": "^1.0.0",
     "http": "0.0.0",
     "method-override": "2.3.x",
-    "morgan": "1.6.x"
+    "morgan": "1.6.x",
+    "socket.io-client": "file:teste/socket.io-client"
   },
   "repository": {},
   "engines": {

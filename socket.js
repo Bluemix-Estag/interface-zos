@@ -1,19 +1,67 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+/**
+ * Module dependencies.
+ */
 
+var express = require('express');
+var routes = require('./routes');
+var path = require('path');
+var app = express();
 var cfenv = require('cfenv');
 var fs = require('fs');
+var http = require('http');
+var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
-
-
+// load local VCAP configuration
+var vcapLocal = null;
+var appEnv = null;
+var appEnvOpts = {};
 
 app.use(bodyParser.json());
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/style', express.static(path.join(__dirname, '/views/style')));
+app.use('/scripts', express.static(path.join(__dirname, '/views/scripts')));
+
 
 
 app.set('port', process.env.PORT || 3000);
 
+fs.stat('./vcap-local.json', function (err, stat) {
+    if (err && err.code === 'ENOENT') {
+        // file does not exist
+        console.log('No vcap-local.json');
+        initializeAppEnv();
+    } else if (err) {
+        console.log('Error retrieving local vcap: ', err.code);
+    } else {
+        vcapLocal = require("./vcap-local.json");
+        console.log("Loaded local VCAP", vcapLocal);
+        appEnvOpts = {
+            vcap: vcapLocal
+        };
+        initializeAppEnv();
+    }
+});
+
+
+// get the app environment from Cloud Foundry, defaulting to local VCAP
+function initializeAppEnv() {
+    appEnv = cfenv.getAppEnv(appEnvOpts);
+    if (appEnv.isLocal) {
+        require('dotenv').load();
+    }
+    if (appEnv.services.cloudantNoSQLDB) {
+        initCloudant();
+    } else {
+        console.error("No Cloudant service exists.");
+    }
+}
+
+
+// =====================================
+// CLOUDANT SETUP ======================
+// =====================================
 var dbname = "data";
 var database;
 
@@ -38,52 +86,39 @@ function initCloudant() {
     database = Cloudant.db.use(dbname);
 }
 
+var rabah = 0;
+var edison = 0;
 
-app.post('/info', function (req, res) {
-    console.log('Login method invoked..')
-    database.get('users', {
-        revs_info: true
-    }, function (err, doc) {
-        if (err) {
-            console.log(err);
-            res.setHeader('Content-Type', 'application/json');
-            res.status(500).json({ message: "An Error Has Ocurred", authenticated: false,status : 500 });
-        } else {
-            // console.log('body'+ JSON.stringify(req.body));
-            var login = req.body.login;
-            var password = req.body.password;
-            var exists = false;
-            var userFound;
-            console.log('Received data: ',login);
-            for (var user in doc.users) {
-                console.log(doc.users[user]);
-                if (doc.users[user].username === login) {
-                    exists = true;
-                    userFound = user;
-                }
-            }
-            if (exists) {
-                if (doc.users[userFound].username.localeCompare(login)==0 && doc.users[userFound].password.localeCompare(password)==0) {
+var roomno = 1;
 
-                    console.log("Authentication Success");
-                    res.setHeader('Content-Type', 'application/json');
-                    res.status(200).json({ message: "Authentication Success", authenticated: true , status:200});
+// app.get('/', function(req, res){
+//     res.sendfile('teste.html');
+// });
 
-                } else {
-                    console.log("Invalid Password");
-                    res.setHeader('Content-Type', 'application/json');
-                    res.status(403).json({ message: "Invalid Password", authenticated: false, status:403 });
-                }
 
-            } else {
-                console.log("User Not Found");
-                res.setHeader('Content-Type', 'application/json');
-                res.status(404).json({ message: "User Not Found", authenticated: false ,status: 404 });
-            }
-        }
-    });
+
+app.get('/',function(req,res){
+    res.render('teste.html');
+})
+
+
+io.on('connection', function(socket){
+    if(io.nsps['/'].adapter.rooms["room-"+roomno] && io.nsps['/'].adapter.room['room-'+roomno].length > 1)
+        roomno++;
+    socket.join("room-" + roomno);
+
+    io.sockets.in("room-no"+ roomno).emit('connectToRoom', 'Edison:'+edison + "\n Rabah" + rabah);
 });
 
 
-app.listen(3000);
-console.log('Listening on port 3000');
+
+
+
+http.createServer(app).listen(app.get('port'), '0.0.0.0', function () {
+    console.log('Express server listening on port ' + app.get('port'));
+});
+
+
+
+
+
