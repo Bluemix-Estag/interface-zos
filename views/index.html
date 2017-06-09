@@ -40,7 +40,6 @@
             margin: 1% 10% !important;
             width: 80% !important;
             background-color: white !important;
-            
         }
         
         #card-conta {
@@ -62,6 +61,7 @@
         }
         
         #card-title1 {
+            text-align: center !important;
             margin-bottom: 20px !important;
             margin-top: 10px !important;
         }
@@ -116,7 +116,23 @@
 
         </ul>
         <div id="test-swipe-1">
-            <!--            <p>Todo</p>-->
+            <div class="card">
+                <div class="card-content" id="card-conta">
+                    <span class="card-title activator grey-text text-darken-4" id="card-title1">Saldo</span>
+                    <div class="response">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">timeline</i>
+                            <input id="conta" type="text" class="validate">
+                            <label for="icon_prefix">Uso</label>
+                        </div>
+                        <div class="progress">
+                            <div class="determinate" style="width: 70%"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
         <div id="test-swipe-2">
 
@@ -165,9 +181,9 @@
     <script>
         var logged;
 
-       
-        
-        function closeBtn(){
+
+
+        function closeBtn() {
             $('#card_do_saldo').html('');
         }
 
@@ -221,7 +237,7 @@
             var pageName = pageSplit[pageSplit.length - 1];
 
             if (sessionCheck('user')) {
-                
+
             } else {
                 if (pageName == 'index') {
                     window.location = '/';
@@ -232,7 +248,7 @@
         checkLoggedUser();
 
         function logout() {
-            
+
             if (confirm('Deseja efetuar logout?') == true) {
                 deleteSession('user');
                 window.location = '/';
