@@ -4,122 +4,13 @@
 <head>
     <title>ZOS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <style>
-        body {
-            overflow-y: hidden !important;
-            background-color: #303030;
-        }
-        
-        .tabs {
-            background-color: #6a1b9a;
-        }
-        
-        .tabs li {
-            color: white;
-        }
-        
-        #test-swipe-2>div,
-        #test-swipe-3>div {
-            display: flex;
-            margin-top: 50px !important;
-            margin-bottom: 80px !important;
-            justify-content: space-around;
-            flex-direction: column;
-            height: 40% !important;
-        }
-        
-        #test-swipe-2 .card-content {
-            height: 120px;
-            !important;
-        }
-        
-        .card {
-            margin: 1% 10% !important;
-            width: 80% !important;
-            background-color: white !important;
-        }
-        
-        #card-conta {
-            margin-top: 10px !important;
-            background-color: white !important;
-            height: 240px !important;
-        }
-        
-        #card-rate {
-            background-color: white !important;
-            margin-top: 10px !important;
-            margin-bottom: 0 !important;
-            height: 240px !important;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center !important;
-            ;
-        }
-        
-        #card-title1 {
-            text-align: center !important;
-            margin-bottom: 20px !important;
-            margin-top: 10px !important;
-        }
-        
-        #sentiment_icon {
-            height: 100px !important;
-            margin-top: 10px !important;
-        }
-        
-        #submit-btn {
-            background-color: #6a1b9a !important;
-        }
-        
-        .input-field input[type=text]:focus {
-            border-bottom: 1px solid #6a1b9a;
-            box-shadow: 0 1px 0 0 #000;
-        }
-        
-        .input-field .prefix.active {
-            color: #6a1b9a;
-        }
-        
-        .input-field input[type=text].valid {
-            border-bottom: 1px solid #6a1b9a !important;
-            box-shadow: 0 1px 0 0 #000 !important;
-        }
-        
-        .input-field input[type=text]:focus+label {
-            color: #6a1b9a;
-        }
-        
-        #card-graph {
-            background-color: white !important;
-        }
-
-    </style>
-
-    <script>
-        //
-        
-        //
-        $(document).ready(function() {
-            $('ul.tabs').tabs('select_tab', 'tab_id');
-        });
-
-        function revealGraph() {
-            document.getElementById('card-graph').innerHTML = '<div class="card-content"><a href="#"  onclick="closeGraph()"><i class="material-icons right" style="color:#6a1b9a !important;margin-top: -20px !important;">keyboard_arrow_up</i></a><div class="input-field col s12"><canvas id="myChart" width: 10% !important; height: 10%; !important ></canvas></div>';
-            drawGraph();
-            
-        }
-
-        function closeGraph() {
-            document.getElementById('card-graph').innerHTML = '<span class="black-text activator">Histórico</span><a href="#"  onclick="revealGraph()"><i class="material-icons right" style="color:#6a1b9a !important;margin-right: 25px !important;">keyboard_arrow_down</i></a>';
-        }
-
-    </script>
-
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="/style/style.css" rel="stylesheet" />
 
 </head>
 
@@ -127,220 +18,163 @@
     <div class="page-bodys">
 
         <ul id="tabs-swipe-demo" class="tabs">
-            <li class="tab col s3"><a href="#test-swipe-1" style="color:white;"><i class="material-icons">trending_up</i></a></li>
-            <li class="tab col s3"><a class="active" href="#test-swipe-2" style="color:white;"><i class="material-icons">account_balance_wallet</i></a></li>
+            <li class="tab col s3"><a href="#test-swipe-1" class="active" style="color:white;" onclick="updatesDraw();"><i class="material-icons">trending_up</i></a></li>
+            <li class="tab col s3"><a href="#test-swipe-2" style="color:white;"><i class="material-icons">account_balance_wallet</i></a></li>
             <li class="tab col s3"><a href="#test-swipe-3" style="color:white;"><i class="material-icons">info_outline</i></a></li>
             <li class="tab col s3 right"><a href="#test-swipe-3" onclick="logout()" style="color:white;"><i class="material-icons">exit_to_app</i></a></li>
 
         </ul>
         <div id="test-swipe-1">
-            <div class="card">
-                <div class="card-content" id="card-conta">
-                    <span class="card-title activator grey-text text-darken-4" id="card-title1">Uso</span>
-                    <div class="response">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">timeline</i>
-                            <input id="teste" type="text" class="validate">
-                            <label for="icon_prefix">Uso</label>
-                            <div class="progress" style="background-color: grey !important;">
-                                <div class="determinate" style="width: 70%;background-color:#6a1b9a !important;"></div>
+
+            <div class="row">
+                <div class="col s10 m10 offset-m1 offset-s1">
+                    <div class="card-panel " style="display:flex !important;flex-direction:column;justify-content:center !important;align-items:center !important;">
+                        <span class="card-title" id="card-title1">Uso</span>
+                        <div class="canvas-holder" id="canvas_div">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <div class="progress" style="background-color: grey !important; width: 50%;">
+                            <div class="determinate" style="width: 50%;background-color:#6a1b9a !important;" id="valor-progresso"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s10 m10 offset-m1 offset-s1">
+
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                            <div class="collapsible-header " style="text-align:center"><i class="material-icons">trending_up</i>Histórico
+                                <a href="#" id="arrow" style="color: #6a1b9a !important"><i class="material-icons right">keyboard_arrow_down</i></a>
+                            </div>
+                            <div class="collapsible-body " id="card-graph">
+                                <div class="line-holder">
+                                    <div class="canvas-holder-line">
+                                        <canvas id="lineChart"></canvas>
+
+                                    </div>
+                                </div>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="test-swipe-2">
+
+                <div class="card">
+                    <div class="card-content" id="card-conta">
+                        <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
+                        <div class="response">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">supervisor_account</i>
+                                <input id="conta" type="text" class="validate">
+                                <label for="icon_prefix">Conta</label>
+                            </div>
+                            <div class="input-field col s4 offset-s4">
+                                <i class="material-icons prefix"></i>
+                                <button class="btn waves-effect waves-light" type="submit" name="action" id="submit-btn" onclick="getAccount()">Enviar<i class="material-icons right">send</i></button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="card" id="card_do_saldo"></div>
             </div>
-
-            <div class="card">
-                <div class="col s12 m5">
-                    <div class="card-panel teal" id="card-graph">
-                        <span class="black-text activator">Histórico</span><a href="#" onclick="revealGraph()"><i class="material-icons right" style="color:#6a1b9a !important; margin-right: 25px !important;">keyboard_arrow_down</i></a>
-                        
+            <div id="test-swipe-3">
+                <div class="card">
+                    <div class="card-content" id="card-conta">
+                        <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
+                        <p class="z-depth-1" style="width: 150px !important;" id="valor_conta">Conta:
+                            <a href="#" id="valor_conta"></a>
+                        </p>
                     </div>
                 </div>
+                <div class="card" id="card-rate1"></div>
             </div>
-
-
-
-
-        </div>
-        <div id="test-swipe-2">
-
-            <div class="card">
-                <div class="card-content" id="card-conta">
-                    <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
-                    <div class="response">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">supervisor_account</i>
-                            <input id="conta" type="text" class="validate">
-                            <label for="icon_prefix">Conta</label>
-                        </div>
-                        <div class="input-field col s4 offset-s4">
-                            <i class="material-icons prefix"></i>
-                            <button class="btn waves-effect waves-light" type="submit" name="action" id="submit-btn" onclick="getAccount()">Enviar<i class="material-icons right">send</i></button>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="card" id="card_do_saldo"></div>
-        </div>
-        <div id="test-swipe-3">
-            <div class="card">
-                <div class="card-content" id="card-conta">
-                    <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
-                    <p class="z-depth-1" style="width: 150px !important;" id="valor_conta">Conta:
-                        <a href="#" id="valor_conta"></a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="card" id="card-rate1"></div>
         </div>
 
-    </div>
+        <script src="/scripts/util.js"></script>
+        <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+        <script src="/scripts/functions.js"></script>
+        <script>
+            $(document).ready(function () {
+                var socket = io('http://localhost:3000');
+                var mainframe = $("#valor-progresso");
+                // socket.on('data', function () {
+                //     // getMainFrameInfo();
+                //     callProgress();
+                //     callHistory();
+                //     console.log('ta entrando pelo menos');
+                // });
 
+                // socket.on('history', function (data) {
+                //     var valores = data;
+                //     var points = valores.map(function (valor) {
+                //         return valor[0] / 10;
+                //     });
+                //     var dates = valores.map(function (valor) {
+                //         return valor[1]
+                //     });
+                //     drawLine(points, dates);
+                // });
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+                // socket.on('progress', function (data) {
+                //     var progress = data;
+                //     // alert(progress);
+                //     drawProgress(progress);
+                // });
 
-    <script src="/scripts/util.js">
+                callHistory();
+                callProgress();
 
+                function callHistory() {
+                    xhrGet('/history', function (response) {
+                        var valores = JSON.parse(response);
+                        var points = valores.map(function (valor) {
+                            return valor[0] / 10;
+                        });
+                        var dates = valores.map(function (valor) {
+                            return valor[1]
+                        });
+                        drawLine(points, dates);
+                        setTimeout(function () {
+                            callHistory();
+                        }, 180000);
+                    }, function (err) {
+                        console.log(err);
+                    });
 
-    </script>
-    <script>
-        var logged;
-
-
-
-        function closeBtn() {
-            $('#card_do_saldo').html('');
-        }
-
-        function getAccount() {
-
-            var data = {
-                "conta": document.getElementById('conta').value || null,
-            };
-
-            if (data.conta.localeCompare('1234') == 0) {
-                document.getElementById('card_do_saldo').innerHTML = '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><a href="#" onclick="closeBtn()" style="color: #6a1b9a !important"><i class="material-icons right" id="closeid">close</i></button><span class="black-text" id="saldo"><h4>Saldo</h4><p style="color: green !important">R$1000,00<p></span></div>';
-
-                document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#" style="color: #6a1b9a">1234</a>';
-                document.getElementById('card-rate1').innerHTML = '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-1">Seu Índice de Crédito</span><p class="z-depth-0" style="width: 150px !important; text-align:center !important; font-size: 22pt;"><a href="#" style="color:#6a1b9a ">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon" style="color: #6a1b9a !important ">sentiment_satisfied</i></a></p></div>';
-
-                document.getElementById('saldo').innerHTML = '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$1000,00<p></span>';
-                logged = true;
-
-            } else if (data.conta.localeCompare('4321') == 0) {
-                document.getElementById('card_do_saldo').innerHTML = '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><a href="#" onclick="closeBtn()" style="color: #6a1b9a !important"><i class="material-icons right" id="closeid">close</i></button><span class="black-text" id="saldo"><h4>Saldo</h4><p style="color: green !important">R$1000,00<p></span></div>';
-
-                document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">1234</a>';
-                document.getElementById('card-rate1').innerHTML = '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
-
-                document.getElementById('saldo').innerHTML = '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$200,00<p></span>';
-                logged = true;
-            }
-
-
-
-            btn.innerHTML = '<div class="progress" style="width:50px; !important;"><div class="indeterminate"></div></div>">';
-            xhrPost('/login', data, function(response) {
-
-
-                    if (response.authenticated) {
-                        setSession("user", data.login);
-                        window.location = '/index';
-                    } else {
-                        alert(JSON.stringify(response));
-                    }
-                },
-                function(err) {
-                    btn.style.paddingTop = '0px';
-                    btn.innerHTML = 'Enviar<i class="material-icons right">send</i>'
-                    alert(err);
-                })
-        }
-
-        function checkLoggedUser() {
-            var pageSplit = location.pathname.split('/');
-            var pageName = pageSplit[pageSplit.length - 1];
-
-            if (sessionCheck('user')) {
-
-            } else {
-                if (pageName == 'index') {
-                    window.location = '/';
                 }
-            }
-        }
 
-        checkLoggedUser();
-
-        function logout() {
-
-            if (confirm('Deseja efetuar logout?') == true) {
-                deleteSession('user');
-                window.location = '/';
-            }
-        }
-
-        function eventFire(el, etype) {
-            if (el.fireEvent) {
-                el.fireEvent('on' + etype);
-            } else {
-                var evObj = document.createEvent('Events');
-                evObj.initEvent(etype, true, false);
-                el.dispatchEvent(evObj);
-            }
-        }
-        
-        //
-        function drawGraph(){
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                function callProgress() {
+                    xhrGet('/progress', function (response) {
+                        var progress = response;
+                        drawProgress(progress);
+                        setTimeout(function () {
+                            callProgress();
+                        }, 60000);
+                    }, function (err) {
+                        console.log(error);
+                    });
                 }
-            }
-        });
-            }
-
-    </script>
+                // function getMainFrameInfo() {
+                //     console.log("mainframe");
+                //     // socket.emit('action', 'data');
+                //     $.get('/info', function (data, status) {
+                //         if (data.status) {
+                //             var valor = (data.valor) / 10 || 0;
+                //             x = valor;
+                //             y = data.date;
+                //             updateDraw(true);
+                //         } else {
+                //             alert(data.message);
+                //         }
+                //     });
+                // }
+                // getMainFrameInfo();
+            });
+        </script>
 </body>
 
 </html>

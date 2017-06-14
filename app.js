@@ -8,9 +8,10 @@ var path = require('path');
 var app = express();
 var cfenv = require('cfenv');
 var fs = require('fs');
-
 var bodyParser = require('body-parser');
-var http = require('http');
+var http = require('http').createServer(app);
+var socketIO = require('socket.io')(http);
+var request = require('request');
 
 // load local VCAP configuration
 var vcapLocal = null;
@@ -85,14 +86,15 @@ function initCloudant() {
         }
     });
     database = Cloudant.db.use(dbname);
+
 }
 
 
-app.get('/index',function(req,res){
+app.get('/index', function (req, res) {
     res.render('index.html');
 })
 
-app.get('/',function(req,res){
+app.get('/', function (req, res) {
     res.render('login.html');
 })
 
@@ -105,14 +107,18 @@ app.post('/login', function (req, res) {
         if (err) {
             console.log(err);
             res.setHeader('Content-Type', 'application/json');
-            res.status(500).json({ message: "An Error Has Ocurred", authenticated: false,status : 500 });
+            res.status(500).json({
+                message: "An Error Has Ocurred",
+                authenticated: false,
+                status: 500
+            });
         } else {
             // console.log('body'+ JSON.stringify(req.body));
             var login = req.body.login;
             var password = req.body.password;
             var exists = false;
             var userFound;
-            console.log('Received data: ',login);
+            console.log('Received data: ', login);
             for (var user in doc.users) {
                 console.log(doc.users[user]);
                 if (doc.users[user].username === login) {
@@ -121,46 +127,163 @@ app.post('/login', function (req, res) {
                 }
             }
             if (exists) {
-                if (doc.users[userFound].username.localeCompare(login)==0 && doc.users[userFound].password.localeCompare(password)==0) {
+                if (doc.users[userFound].username.localeCompare(login) == 0 && doc.users[userFound].password.localeCompare(password) == 0) {
 
                     console.log("Authentication Success");
                     res.setHeader('Content-Type', 'application/json');
-                    res.status(200).json({ message: "Authentication Success", authenticated: true , status:200});
+                    res.status(200).json({
+                        message: "Authentication Success",
+                        authenticated: true,
+                        status: 200
+                    });
 
                 } else {
                     console.log("Invalid Password");
                     res.setHeader('Content-Type', 'application/json');
-                    res.status(403).json({ message: "Invalid Password", authenticated: false, status:403 });
+                    res.status(403).json({
+                        message: "Invalid Password",
+                        authenticated: false,
+                        status: 403
+                    });
                 }
 
             } else {
                 console.log("User Not Found");
                 res.setHeader('Content-Type', 'application/json');
-                res.status(404).json({ message: "User Not Found", authenticated: false ,status: 404 });
+                res.status(404).json({
+                    message: "User Not Found",
+                    authenticated: false,
+                    status: 404
+                });
             }
         }
     });
 });
 
-app.get('/getCICSStatus',function(req,res){
+// app.get('/crash',function(req,res){
+//     var options = {
+//         uri: "https://whatsound-playlist.mybluemix.net/whatsound/api/v1/playlist/ranking",
+//         method: "GET"
+//     }
+
+//     function callback(error,response,body){
+//         if(!error && response.statusCode == 200){
+//             var info = JSON.parse(body);
+//             console.log(info);
+//         }
+//     }
+
+//     for(var i=0;i<20;i++){
+//         request(options,callback);
+//     }
+// })
+
+
+app.get('/getCICSStatus', function (req, res) {
     var data = Math.ceil(Math.random() * 100);
 
-    res.send({status:data});
+    res.send({
+        status: data
+    });
 });
 
-app.get('/getSaldo',function(req,res){
+app.get('/getSaldo', function (req, res) {
     var acc = req.query.conta;
 
     //call mainframe api and return balance
 });
 
-app.get('/getCredito', function(req,res){
+app.get('/getCredito', function (req, res) {
     var acc = req.query.conta;
 
 
     //call mainframe api and return credit rate
 });
+// Socket IO
+app.get('/info', function (req, res) {
+    console.log('funcionou o /info');
+    database.get('main', {
+        revs_info: true
+    }, function (err, doc) {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log(JSON.stringify(doc));
+            var valor = doc.status.valor;
+            // console.log("TA AQUI OH" + valor[1][0]);
+            res.status(200).json({
+                valor: valor[valor.length - 1][0],
+                date: valor[valor.length - 1][1],
+                status: true
+            });
+        }
+    });
+});
 
-http.createServer(app).listen(app.get('port'), '0.0.0.0', function () {
+var globalSocket;
+app.post('/inserted', function (req, res) {
+    console.log("Houve mudança no banco");
+    if (globalSocket != null) callSocket(globalSocket);
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({
+        status: true
+    });
+});
+
+
+app.get('/history', function (req, res) {
+        //...
+        database.get('main', {
+            revs_info: true
+        }, function (err, doc) {
+            if (err) {
+                //Error handle later
+            } else {
+                var valor = doc.status.valor;
+                res.setHeader('Content-Type','application/json');
+                res.status(200).json(valor);
+            }
+        })
+    
+});
+
+app.get('/progress',function(req,res){
+    database.get('main', {
+            revs_info: true
+        }, function (err, doc) {
+            if (err) {
+                //Error handle later
+            } else {
+                var valor = doc.status.valor[doc.status.valor.length -1 ][0];
+                // globalSocket.emit('progress', valor);
+                res.setHeader('Content-Type','application/json');
+                res.status(200).json(valor);
+            }
+        })
+});
+
+
+
+
+
+
+/**** SOCKET ****/
+socketIO.on('connection', function (socket) {
+    globalSocket = socket;
+    console.log('a user connected');
+
+    socket.on('disconnect', function () {
+        console.log('user disconnected');
+    });
+    // callSocket(socket);
+    // callHistory();
+});
+
+function callSocket(socket) {
+    socket.emit('data');
+}
+
+
+http.listen(app.get('port'), '0.0.0.0', function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
