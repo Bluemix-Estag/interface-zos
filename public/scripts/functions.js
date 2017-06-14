@@ -34,7 +34,7 @@ function getAccount() {
 
         document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#" style="color: #6a1b9a">1234</a>';
         document.getElementById('card-rate1').innerHTML =
-            '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-1">Seu Índice de Crédito</span><p class="z-depth-0" style="width: 150px !important; text-align:center !important; font-size: 22pt;"><a href="#" style="color:#6a1b9a ">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon" style="color: #6a1b9a !important ">sentiment_satisfied</i></a></p></div>';
+            '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-1">Seu Índice de Crédito</span><p class="z-depth-0" style="width: 150px !important; text-align:center !important; font-size: 22pt;"><a href="#" style="color:#6a1b9a ">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon" style="color: #6a1b9a !important ">sentiment_neutral</i></a></p></div>';
 
         document.getElementById('saldo').innerHTML =
             '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$1000,00<p></span>';
@@ -44,12 +44,12 @@ function getAccount() {
         document.getElementById('card_do_saldo').innerHTML =
             '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><a href="#" onclick="closeBtn()" style="color: #6a1b9a !important"><i class="material-icons right" id="closeid">close</i></button><span class="black-text" id="saldo"><h4>Saldo</h4><p style="color: green !important">R$1000,00<p></span></div>';
 
-        document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">1234</a>';
+        document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">4321</a>';
         document.getElementById('card-rate1').innerHTML =
-            '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
+            '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">7</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
 
         document.getElementById('saldo').innerHTML =
-            '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$200,00<p></span>';
+            '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$2000,00<p></span>';
         logged = true;
     }
 
@@ -57,8 +57,6 @@ function getAccount() {
 
 
     xhrPost('/login', data, function (response) {
-
-
             if (response.authenticated) {
                 setSession("user", data.login);
                 window.location = '/index';
