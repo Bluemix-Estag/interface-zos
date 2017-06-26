@@ -2,12 +2,13 @@
 <html>
 
 <head>
-    <title>ZOS-Login</title>
+    <title>zOS Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/scripts/functions.js"></script>
     <style>
         html,
         body {
@@ -75,7 +76,7 @@
 
 <body>
     <ul id="tabs-swipe-demo" class="tabs" style="text-align:center !important;color: white !important">
-        <p>ZOS</p>
+        <p>zOS Login</p>
     </ul>
     <div class="row">
         <div class="row col s10 offset-s1">
@@ -111,8 +112,6 @@
 
             btn.innerHTML = '<div class="progress" style="width:50px; !important;"><div class="indeterminate"></div></div>">';
             xhrPost('/login', data, function(response) {
-
-
                 if (response.authenticated) {
                     setSession("user", data.login);
                     window.location = '/index';

@@ -22,54 +22,40 @@ function closeBtn() {
     $('#card_do_saldo').html('');
 }
 
-function getAccount() {
 
-    var data = {
-        "conta": document.getElementById('conta').value || null,
-    };
 
-    if (data.conta.localeCompare('1234') == 0) {
+
+function getInfo() {
+    var username = getSession('user');
+    xhrGet('/getInfo?user=' + username, function (data) {
+        console.log("Deu certo" + data);
+        var saldo = data.saldo;
+        var score = data.score;
+        var conta = data.conta;
+        // // // // // // // //
         document.getElementById('card_do_saldo').innerHTML =
-            '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><a href="#" onclick="closeBtn()" style="color: #6a1b9a !important"><i class="material-icons right" id="closeid">close</i></button><span class="black-text" id="saldo"><h4>Saldo</h4><p style="color: green !important">R$1000,00<p></span></div>';
+            '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><span class="black-text card-title" id="saldo" style="text-align:center !important;"><h4>Saldo</h4><p style="color: green !important">R$' + saldo + ',00<p></span></div>';
 
-        document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#" style="color: #6a1b9a">1234</a>';
+        document.getElementById('valor_conta').style.textAlign = 'center';
+        document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">' + conta + '</a>';
         document.getElementById('card-rate1').innerHTML =
-            '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-1">Seu Índice de Crédito</span><p class="z-depth-0" style="width: 150px !important; text-align:center !important; font-size: 22pt;"><a href="#" style="color:#6a1b9a ">5</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon" style="color: #6a1b9a !important ">sentiment_neutral</i></a></p></div>';
+            '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">' + score + '</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
 
         document.getElementById('saldo').innerHTML =
-            '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$1000,00<p></span>';
+            '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$' + saldo + ',00<p></span>';
         logged = true;
 
-    } else if (data.conta.localeCompare('4321') == 0) {
-        document.getElementById('card_do_saldo').innerHTML =
-            '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><a href="#" onclick="closeBtn()" style="color: #6a1b9a !important"><i class="material-icons right" id="closeid">close</i></button><span class="black-text" id="saldo"><h4>Saldo</h4><p style="color: green !important">R$1000,00<p></span></div>';
 
-        document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">4321</a>';
-        document.getElementById('card-rate1').innerHTML =
-            '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">7</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
 
-        document.getElementById('saldo').innerHTML =
-            '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$2000,00<p></span>';
-        logged = true;
-    }
+    }, function (err) {
+
+    });
 
 
 
-
-    xhrPost('/login', data, function (response) {
-            if (response.authenticated) {
-                setSession("user", data.login);
-                window.location = '/index';
-            } else {
-                alert(JSON.stringify(response));
-            }
-        },
-        function (err) {
-            btn.style.paddingTop = '0px';
-            btn.innerHTML = 'Enviar<i class="material-icons right">send</i>'
-            alert(err);
-        })
 }
+
+
 
 function checkLoggedUser() {
     var pageSplit = location.pathname.split('/');
@@ -85,6 +71,9 @@ function checkLoggedUser() {
 }
 
 checkLoggedUser();
+
+
+getInfo();
 
 function logout() {
 
@@ -118,7 +107,7 @@ function drawProgress(progress) {
     var ctx = document.getElementById('myChart').getContext('2d');
     var data = {
         datasets: [{
-            data: [progress,100-progress],
+            data: [progress, 100 - progress],
             backgroundColor: ['#6a1b9a', '#eee']
         }]
     };
@@ -139,13 +128,15 @@ function drawProgress(progress) {
     });
 }
 
-function drawLine(points,dates){
+function drawLine(points, dates) {
     var ctx2 = document.getElementById('lineChart').getContext('2d');
 
     var myChart = new Chart(ctx2, {
         type: 'line',
         data: {
-            labels: dates.map(function(date){return date.split('T')[1].split('-')[0];}),
+            labels: dates.map(function (date) {
+                return date.split('T')[1].split('-')[0];
+            }),
             datasets: [{
                 label: '% de Uso',
                 data: points,
@@ -153,8 +144,8 @@ function drawLine(points,dates){
             }]
         },
         options: {
-            showLines : true,
-            spanGaps : false,
+            showLines: true,
+            spanGaps: false,
             responsive: true
         }
     });

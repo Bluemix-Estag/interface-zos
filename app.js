@@ -134,8 +134,10 @@ app.post('/login', function (req, res) {
                     res.status(200).json({
                         message: "Authentication Success",
                         authenticated: true,
-                        status: 200
+                        status: 200,
+                        user: doc.users[userFound].username
                     });
+                    console.log(doc.users[userFound].username);
 
                 } else {
                     console.log("Invalid Password");
@@ -160,23 +162,27 @@ app.post('/login', function (req, res) {
     });
 });
 
-// app.get('/crash',function(req,res){
-//     var options = {
-//         uri: "https://whatsound-playlist.mybluemix.net/whatsound/api/v1/playlist/ranking",
-//         method: "GET"
-//     }
 
-//     function callback(error,response,body){
-//         if(!error && response.statusCode == 200){
-//             var info = JSON.parse(body);
-//             console.log(info);
-//         }
-//     }
-
-//     for(var i=0;i<20;i++){
-//         request(options,callback);
-//     }
-// })
+app.get('/getInfo', function(req,res){
+    res.setHeader('Context-Type','application/json');
+    var username = req.query.user;
+    database.get('users', {
+        revs_info: true
+    },function(err,doc){
+        if(err){
+            console.log('Error', err);
+        }else{
+            var users = doc.users;
+            for(var user of users){
+                
+                if(username === user.username){
+                    console.log('User found '+JSON.stringify(user));
+                    res.status(200).json(user);
+                }
+            }
+        }
+    })
+})
 
 
 app.get('/getCICSStatus', function (req, res) {

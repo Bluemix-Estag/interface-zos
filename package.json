@@ -3,8 +3,8 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "test": "node server.js",
-    "start": "npm-run-all --parallel  open:src test",
+    
+    "start": "node app.js",
     "open:src": "node app.js"
   },
   "dependencies": {
@@ -21,7 +21,6 @@
     "method-override": "2.3.x",
     "moment": "^2.18.1",
     "morgan": "1.6.x",
-    "npm-run-all": "3.1.1",
     "plotly": "^1.0.6",
     "request": "^2.81.0"
   },
