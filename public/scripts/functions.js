@@ -43,6 +43,11 @@ function getInfo() {
 
         document.getElementById('saldo').innerHTML =
             '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$' + saldo + ',00<p></span>';
+
+        // document.getElementById('myChart').appendChild  '<p style="z-index:99 !important;">Oi</p>';
+     
+        // $('#canvas_div').append('<p style="z-index:99 !important;position:relative;">Oi</p>');
+
         logged = true;
 
 
@@ -106,9 +111,9 @@ function drawProgress(progress) {
     // Doughnut chart
     var ctx = document.getElementById('myChart').getContext('2d');
     var data = {
-        labels : ['Usado','Livre'],
+        labels: ['Usado', 'Livre'],
         datasets: [{
-            label : 'Uso',
+            label: 'Uso',
             data: [progress, 100 - progress],
             backgroundColor: ['#6a1b9a', '#eee']
         }]
@@ -128,6 +133,16 @@ function drawProgress(progress) {
             responsive: true
         }
     });
+
+       setTimeout(function () {
+            var canvas = document.getElementById("myChart");
+            var ctx = canvas.getContext("2d");
+            ctx.font = "12pt";
+            ctx.fillStyle = "#6a1b9a";
+            ctx.textAlign = "center";
+            ctx.fillText(progress+"%", canvas.width / 2, canvas.height / 2 + 17);
+
+        }, 2000);
 }
 
 function drawLine(points, dates) {
