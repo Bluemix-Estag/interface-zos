@@ -101,6 +101,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script src="/scripts/util.js"></script>
     <script>
+    
+        $(document).keypress(function (e) {
+    if (e.which == 13) {
+        getValidation();
+    }
+});
+
         function getValidation() {
             var btn = document.getElementById('submit-btn');
             btn.style.paddingTop = '10px';

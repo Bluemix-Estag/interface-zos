@@ -106,7 +106,9 @@ function drawProgress(progress) {
     // Doughnut chart
     var ctx = document.getElementById('myChart').getContext('2d');
     var data = {
+        labels : ['Usado','Livre'],
         datasets: [{
+            label : 'Uso',
             data: [progress, 100 - progress],
             backgroundColor: ['#6a1b9a', '#eee']
         }]
