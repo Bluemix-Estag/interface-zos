@@ -25,7 +25,7 @@ html {
 
  #test-swipe-3>div {
      display: flex;
-     margin-top: 10px !important;
+     margin-top: 0px !important;
      margin-bottom: 20px !important;
      justify-content: space-around;
      flex-direction: column;
