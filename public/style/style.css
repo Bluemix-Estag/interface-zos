@@ -14,15 +14,34 @@ html {
      color: white;
  }
 
- #test-swipe-2>div,
- #test-swipe-3>div {
+ #test-swipe-2>div {
      display: flex;
-     margin-top: 50px !important;
-     margin-bottom: 80px !important;
+     margin-top: 10px !important;
+     margin-bottom: 10px !important;
      justify-content: space-around;
      flex-direction: column;
-     height: 40% !important;
+     height: 30% !important;
  }
+
+ #test-swipe-3>div {
+     display: flex;
+     margin-top: 10px !important;
+     margin-bottom: 20px !important;
+     justify-content: space-around;
+     flex-direction: column;
+     height: 30% !important;
+ }
+
+ #card-rate1{
+     display: flex;
+     margin-top: 150px !important;
+     justify-content: space-around;
+     flex-direction: column;
+ }
+
+
+
+
 
  #test-swipe-2 .card-content {
      height: 120px;
@@ -111,3 +130,47 @@ html {
         width: 120%;
      }
  }
+
+
+.emprestimo::-moz-placeholder , .input-field::-moz-placeholder{
+
+    text-align: center;
+
+    color: black;
+
+}
+.emprestimo::-webkit-input-placeholder , .input-field::-webkit-input-placeholde{
+
+    text-align: center;
+
+    color: black;
+
+}
+.emprestimo::-ms-input-placeholder , .input-field::-ms-input-placeholder{
+
+    text-align: center;
+
+    color: black;
+
+}
+.emprestimo::-moz-placeholder , .input-field::-moz-placeholder{
+
+    text-align: center;
+
+    color: black;
+
+}
+.emprestimo::-webkit-input-placeholder , .input-field::-webkit-input-placeholder {
+
+    text-align: center;
+
+    color: black;
+
+}
+.emprestimo::-ms-input-placeholder, .input-field::-ms-input-placeholder{
+
+    text-align: center;
+
+    color: black;
+
+}

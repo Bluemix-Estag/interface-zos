@@ -22,6 +22,17 @@ function closeBtn() {
     $('#card_do_saldo').html('');
 }
 
+function getBtn(){
+    var username = getSession('user');
+    var valor = document.getElementById('valor_emprestimo').value;
+
+    console.log(valor);
+    xhrGet('/getInfo?user='+username, function(data){
+        var score = data.score;
+        document.getElementById('card-rate1').innerHTML = '<a href="#"><i class="material-icons right">close</i></a><div class="card-content" id="card-rate"><span class="black-text card-title center">Valor do emprestimo: <span style="color:green">R$'+valor+'</span></span><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">' + score + '</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
+        document.getElementById('valor_emprestimo').value = '';
+    });
+}
 
 
 
@@ -34,19 +45,10 @@ function getInfo() {
         var conta = data.conta;
         // // // // // // // //
         document.getElementById('card_do_saldo').innerHTML =
-            '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><span class="black-text card-title" id="saldo" style="text-align:center !important;"><h4>Saldo</h4><p style="color: green !important">R$' + saldo + ',00<p></span></div>';
+            '<div class="card-panel teal" style="background-color: white !important;box-shadow: none;"><span class="black-text " id="saldo" style="text-align:center !important;"><h4>Saldo</h4><p style="color: green !important">R$' + saldo + ',00<p></span></div>';
 
         document.getElementById('valor_conta').style.textAlign = 'center';
         document.getElementById('valor_conta').innerHTML = 'Conta:<a href="#">' + conta + '</a>';
-        document.getElementById('card-rate1').innerHTML =
-            '<div class="card-content" id="card-rate"><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">' + score + '</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
-
-        document.getElementById('saldo').innerHTML =
-            '<h4 class="card-title grey-text">Saldo</h4><p style="color: green !important">R$' + saldo + ',00<p></span>';
-
-        // document.getElementById('myChart').appendChild  '<p style="z-index:99 !important;">Oi</p>';
-     
-        // $('#canvas_div').append('<p style="z-index:99 !important;position:relative;">Oi</p>');
 
         logged = true;
 
@@ -111,15 +113,13 @@ function drawProgress(progress) {
     // Doughnut chart
     var ctx = document.getElementById('myChart').getContext('2d');
     var data = {
-        labels: ['Usado', 'Livre'],
         datasets: [{
-            label: 'Uso',
             data: [progress, 100 - progress],
             backgroundColor: ['#6a1b9a', '#eee']
         }]
     };
 
-    document.getElementById('valor-progresso').style.width = progress + 'px';
+    document.getElementById('valor-progresso').style.width = progress + '%';
     document.getElementById('valor-progresso').style.backgroundColor = '#6a1b9a !important';
     myPieChart = new Chart(ctx, {
         type: 'doughnut',
@@ -140,7 +140,7 @@ function drawProgress(progress) {
             ctx.font = "12pt";
             ctx.fillStyle = "#6a1b9a";
             ctx.textAlign = "center";
-            ctx.fillText(progress+"%", canvas.width / 2, canvas.height / 2 + 17);
+            ctx.fillText(progress+"%", canvas.width / 2, canvas.height / 2 );
 
         }, 2000);
 }

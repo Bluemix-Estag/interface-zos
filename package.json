@@ -3,7 +3,6 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    
     "start": "node app.js",
     "open:src": "node app.js"
   },
@@ -22,7 +21,8 @@
     "moment": "^2.18.1",
     "morgan": "1.6.x",
     "plotly": "^1.0.6",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "socket.io": "^2.0.3"
   },
   "repository": {},
   "engines": {

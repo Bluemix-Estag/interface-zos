@@ -27,20 +27,20 @@
         <div id="test-swipe-1">
 
             <div class="row">
-                <div class="col s10 m10 offset-m1 offset-s1">
+                <div class="col s12 m10 offset-m1 ">
                     <div class="card-panel " style="display:flex !important;flex-direction:column;justify-content:center !important;align-items:center !important;">
                         <span class="card-title" id="card-title1">Uso</span>
                         <div class="canvas-holder" id="canvas_div">
                             <canvas id="myChart"></canvas>
                         </div>
                         <div class="progress" style="background-color: grey !important; width: 60%;">
-                            <div class="determinate" style="width: 50%;background-color:#6a1b9a !important;" id="valor-progresso"></div>
+                            <div class="determinate" style="width:100%; background-color:#6a1b9a !important;" id="valor-progresso"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col s10 m10 offset-m1 offset-s1">
+                <div class="col s12 m10 offset-m1   ">
 
                     <ul class="collapsible" data-collapsible="accordion">
                         <li>
@@ -77,15 +77,29 @@
                         </div>
                     </div>
                 </div>-->
+                <div class="row">
+                <div class="col s12 m12">
                 <div class="card" id="card_do_saldo"></div>
+                </div>
+                </div>
             </div>
-            <div id="test-swipe-3">
+            <div id="test-swipe-3" style="margin:0 !important; padding: 0!important;">
                 <div class="card" >
-                    <div class="card-content" id="card-conta" style="display:flex !important; flex-direction: column !important; align-items: center !important;" >
+                    <div class="card-content" id="card-conta">
                         <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
                         <p class="z-depth-1" style="width: 150px !important;" id="valor_conta">Conta:
                             <a href="#" id="valor_conta"></a>
                         </p>
+                        <div id="numero_conta">
+                             <div class="row">
+                                <div class="input-field col s12 black-text center">
+                                    <input  id="valor_emprestimo" type="text" class="validate" placeholder="Valor do empréstimo" class="emprestimo">
+                                    <button class="btn waves-effect waves-light blue" type="submit" name="action" onclick="getBtn()">Submit
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card" id="card-rate1"></div>
