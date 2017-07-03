@@ -33,7 +33,7 @@
                         <div class="canvas-holder" id="canvas_div">
                             <canvas id="myChart"></canvas>
                         </div>
-                        <div class="progress" style="background-color: grey !important; width: 50%;">
+                        <div class="progress" style="background-color: grey !important; width: 60%;">
                             <div class="determinate" style="width: 50%;background-color:#6a1b9a !important;" id="valor-progresso"></div>
                         </div>
                     </div>
@@ -93,13 +93,13 @@
         </div>
 
         <script src="/scripts/util.js"></script>
-        <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
         <script src="/scripts/functions.js"></script>
         <script>
             $(document).ready(function () {
-                var socket = io('http://localhost:3000');
+                // var socket = io('http://localhost:3000');
                 var mainframe = $("#valor-progresso");
                 // socket.on('data', function () {
                 //     // getMainFrameInfo();
@@ -130,10 +130,14 @@
 
                 function callHistory() {
                     xhrGet('/history', function (response) {
-                        var valores = JSON.parse(response);
+                        // console.log(JSON.stringify("Resposta ta aqui do history" + response));
+                        var valores = response;
                         var points = valores.map(function (valor) {
                             return valor[0] / 10;
                         });
+
+                        // console.log("Os valores:" + valores);
+                        // console.log("Os pontos: " + points);
                         var dates = valores.map(function (valor) {
                             return valor[1]
                         });
@@ -149,6 +153,7 @@
 
                 function callProgress() {
                     xhrGet('/progress', function (response) {
+                        console.log('/Progress ',progress);
                         var progress = response;
                         drawProgress(progress);
                         setTimeout(function () {

@@ -10,7 +10,7 @@ var cfenv = require('cfenv');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var http = require('http').createServer(app);
-var socketIO = require('socket.io')(http);
+// var socketIO = require('socket.io')(http);
 var request = require('request');
 
 // load local VCAP configuration
@@ -226,10 +226,10 @@ app.get('/info', function (req, res) {
     });
 });
 
-var globalSocket;
+// var globalSocket;
 app.post('/inserted', function (req, res) {
     console.log("Houve mudança no banco");
-    if (globalSocket != null) callSocket(globalSocket);
+    // if (globalSocket != null) callSocket(globalSocket);
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json({
         status: true
@@ -238,16 +238,19 @@ app.post('/inserted', function (req, res) {
 
 
 app.get('/history', function (req, res) {
-        //...
+        console.log('acessou o historico');
         database.get('main', {
             revs_info: true
         }, function (err, doc) {
             if (err) {
                 //Error handle later
+                res.setHeader('Content-Type','application/json');
+                res.status(500).json({error: true, description: "Internal server error"});
             } else {
                 var valor = doc.status.valor;
                 res.setHeader('Content-Type','application/json');
                 res.status(200).json(valor);
+                console.log(valor);
             }
         })
     
@@ -259,6 +262,8 @@ app.get('/progress',function(req,res){
         }, function (err, doc) {
             if (err) {
                 //Error handle later
+                  res.setHeader('Content-Type','application/json');
+                res.status(500).json({error: true, description: "Internal server error"});
             } else {
                 var valor = doc.status.valor[doc.status.valor.length -1 ][0];
                 // globalSocket.emit('progress', valor);
@@ -274,20 +279,20 @@ app.get('/progress',function(req,res){
 
 
 /**** SOCKET ****/
-socketIO.on('connection', function (socket) {
-    globalSocket = socket;
-    console.log('a user connected');
+// socketIO.on('connection', function (socket) {
+//     globalSocket = socket;
+//     console.log('a user connected');
 
-    socket.on('disconnect', function () {
-        console.log('user disconnected');
-    });
-    // callSocket(socket);
-    // callHistory();
-});
+//     socket.on('disconnect', function () {
+//         console.log('user disconnected');
+//     });
+//     // callSocket(socket);
+//     // callHistory();
+// });
 
-function callSocket(socket) {
-    socket.emit('data');
-}
+// function callSocket(socket) {
+//     socket.emit('data');
+// }
 
 
 http.listen(app.get('port'), '0.0.0.0', function () {

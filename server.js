@@ -88,6 +88,7 @@ function mainframeDB() {
     }, function (err, doc) {
         if (err) {
             console.error(err);
+            
         } else {
             console.log('entrou no acessado');
             var valores = doc.status.valor;
@@ -106,7 +107,7 @@ function mainframeDB() {
                 } else {
 
                     var options = {
-                        uri: 'http://localhost:3000/inserted',
+                        uri: 'https://zos-dashboard.mybluemix.net/inserted',
                         method: 'POST'
                     }
 
@@ -114,6 +115,7 @@ function mainframeDB() {
                         if (!error && response.statusCode == 200) {
                             //    res.setHeader('Content-Type', 'application/json');
                             // console.log(JSON.stringify(doc));
+                            console.log('New value inserted')
                         } else {
                             console.log(JSON.stringify(doc));
                         }
