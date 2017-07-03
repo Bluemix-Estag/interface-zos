@@ -163,20 +163,20 @@ app.post('/login', function (req, res) {
 });
 
 
-app.get('/getInfo', function(req,res){
-    res.setHeader('Context-Type','application/json');
+app.get('/getInfo', function (req, res) {
+    res.setHeader('Context-Type', 'application/json');
     var username = req.query.user;
     database.get('users', {
         revs_info: true
-    },function(err,doc){
-        if(err){
+    }, function (err, doc) {
+        if (err) {
             console.log('Error', err);
-        }else{
+        } else {
             var users = doc.users;
-            for(var user of users){
-                
-                if(username === user.username){
-                    console.log('User found '+JSON.stringify(user));
+            for (var user of users) {
+
+                if (username === user.username) {
+                    console.log('User found ' + JSON.stringify(user));
                     res.status(200).json(user);
                 }
             }
@@ -238,39 +238,66 @@ app.post('/inserted', function (req, res) {
 
 
 app.get('/history', function (req, res) {
-        console.log('acessou o historico');
-        database.get('main', {
-            revs_info: true
-        }, function (err, doc) {
-            if (err) {
-                //Error handle later
-                res.setHeader('Content-Type','application/json');
-                res.status(500).json({error: true, description: "Internal server error"});
+    database.get('main', {
+        revs_info: true
+    }, function (err, doc) {
+        if (err) {
+            //Error handle later
+            res.setHeader('Content-Type', 'application/json');
+            res.status(500).json({
+                error: true,
+                description: "Internal server error"
+            });
+        } else {
+            if (doc.status.valor.length > 5) {
+                var valor = [];
+                var mainframe = doc.status.valor;
+                valor1 = mainframe[mainframe.length -1];
+                valor2 = mainframe[mainframe.length -2];
+                valor3 = mainframe[mainframe.length -3];
+                valor4 = mainframe[mainframe.length -4];
+                valor5 = mainframe[mainframe.length -5];
+
+                valor.push(valor1);
+                valor.push(valor2);
+                valor.push(valor3);
+                valor.push(valor4);
+                valor.push(valor5);
+                
+
+                console.log("Maior que 5:" + valor);
+                res.setHeader('Content-Type', 'application/json');
+                res.status(200).json(valor);
+
             } else {
                 var valor = doc.status.valor;
-                res.setHeader('Content-Type','application/json');
+                console.log("Menor que 5:" + valor);
+                res.setHeader('Content-Type', 'application/json');
                 res.status(200).json(valor);
-                console.log(valor);
             }
-        })
-    
+        }
+    })
+
 });
 
-app.get('/progress',function(req,res){
+app.get('/progress', function (req, res) {
     database.get('main', {
-            revs_info: true
-        }, function (err, doc) {
-            if (err) {
-                //Error handle later
-                  res.setHeader('Content-Type','application/json');
-                res.status(500).json({error: true, description: "Internal server error"});
-            } else {
-                var valor = doc.status.valor[doc.status.valor.length -1 ][0];
-                // globalSocket.emit('progress', valor);
-                res.setHeader('Content-Type','application/json');
-                res.status(200).json(valor);
-            }
-        })
+        revs_info: true
+    }, function (err, doc) {
+        if (err) {
+            //Error handle later
+            res.setHeader('Content-Type', 'application/json');
+            res.status(500).json({
+                error: true,
+                description: "Internal server error"
+            });
+        } else {
+            var valor = doc.status.valor[doc.status.valor.length - 1][0];
+            // globalSocket.emit('progress', valor);
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(valor);
+        }
+    })
 });
 
 

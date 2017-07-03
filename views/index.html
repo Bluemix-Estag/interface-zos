@@ -144,21 +144,17 @@
 
                 function callHistory() {
                     xhrGet('/history', function (response) {
-                        // console.log(JSON.stringify("Resposta ta aqui do history" + response));
                         var valores = response;
                         var points = valores.map(function (valor) {
                             return valor[0] / 10;
                         });
-
-                        // console.log("Os valores:" + valores);
-                        // console.log("Os pontos: " + points);
                         var dates = valores.map(function (valor) {
                             return valor[1]
                         });
                         drawLine(points, dates);
                         setTimeout(function () {
                             callHistory();
-                        }, 180000);
+                        }, 15000);
                     }, function (err) {
                         console.log(err);
                     });
@@ -177,21 +173,7 @@
                         console.log(error);
                     });
                 }
-                // function getMainFrameInfo() {
-                //     console.log("mainframe");
-                //     // socket.emit('action', 'data');
-                //     $.get('/info', function (data, status) {
-                //         if (data.status) {
-                //             var valor = (data.valor) / 10 || 0;
-                //             x = valor;
-                //             y = data.date;
-                //             updateDraw(true);
-                //         } else {
-                //             alert(data.message);
-                //         }
-                //     });
-                // }
-                // getMainFrameInfo();
+                
             });
         </script>
 </body>

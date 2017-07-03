@@ -42,7 +42,6 @@ function closeEmprestimo(){
 function getInfo() {
     var username = getSession('user');
     xhrGet('/getInfo?user=' + username, function (data) {
-        console.log("Deu certo" + data);
         var saldo = data.saldo;
         var score = data.score;
         var conta = data.conta;
@@ -121,7 +120,6 @@ function drawProgress(progress) {
             backgroundColor: ['#6a1b9a', '#eee']
         }]
     };
-
     document.getElementById('valor-progresso').style.width = progress + '%';
     document.getElementById('valor-progresso').style.backgroundColor = '#6a1b9a !important';
     myPieChart = new Chart(ctx, {
@@ -144,7 +142,6 @@ function drawProgress(progress) {
             ctx.fillStyle = "#6a1b9a";
             ctx.textAlign = "center";
             ctx.fillText(progress+"%", canvas.width / 2, canvas.height / 2 );
-
         }, 2000);
 }
 
