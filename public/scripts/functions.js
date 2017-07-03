@@ -29,11 +29,14 @@ function getBtn(){
     console.log(valor);
     xhrGet('/getInfo?user='+username, function(data){
         var score = data.score;
-        document.getElementById('card-rate1').innerHTML = '<a href="#"><i class="material-icons right">close</i></a><div class="card-content" id="card-rate"><span class="black-text card-title center">Valor do emprestimo: <span style="color:green">R$'+valor+'</span></span><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">' + score + '</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
+        document.getElementById('card-rate1').innerHTML = '<a onclick="closeEmprestimo()" style="cursor:pointer"><i class="material-icons right">close</i></a><div class="card-content" id="card-rate"><span class="black-text card-title center">Valor do emprestimo: <span style="color:green">R$'+valor+'</span></span><span class="card-title grey-text text-darken-4">Seu Rate</span><p class="z-depth-1" style="width: 150px !important; text-align:center; font-size: 22pt;"><a href="#">' + score + '</a></p><p class="z-depth-1" style="width: 150px !important; text-align:center;margin-top:2px; !important; height:40px;"><a href="#"><i class="material-icons" id="sentiment_icon">sentiment_satisfied</i></a></p></div>';
         document.getElementById('valor_emprestimo').value = '';
     });
 }
 
+function closeEmprestimo(){
+    document.getElementById('card-rate1').innerHTML = '';
+}
 
 
 function getInfo() {

@@ -16,11 +16,12 @@ html {
 
  #test-swipe-2>div {
      display: flex;
-     margin-top: 10px !important;
+     margin-top: 15px !important;
      margin-bottom: 10px !important;
      justify-content: space-around;
      flex-direction: column;
      height: 30% !important;
+    
  }
 
  #test-swipe-3>div {
