@@ -252,20 +252,12 @@ app.get('/history', function (req, res) {
             if (doc.status.valor.length > 5) {
                 var valor = [];
                 var mainframe = doc.status.valor;
-                valor1 = mainframe[mainframe.length -1];
-                valor2 = mainframe[mainframe.length -2];
-                valor3 = mainframe[mainframe.length -3];
-                valor4 = mainframe[mainframe.length -4];
-                valor5 = mainframe[mainframe.length -5];
 
-                valor.push(valor1);
-                valor.push(valor2);
-                valor.push(valor3);
-                valor.push(valor4);
-                valor.push(valor5);
-                
 
-                console.log("Maior que 5:" + valor);
+                for(var i = mainframe.length-1;i>=mainframe.length-5;i--){
+                    valor.push(mainframe[i]);
+                }
+
                 res.setHeader('Content-Type', 'application/json');
                 res.status(200).json(valor);
 
