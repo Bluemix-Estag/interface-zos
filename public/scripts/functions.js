@@ -12,9 +12,9 @@ $(document).ready(function () {
             document.getElementById('arrow').firstChild.innerHTML = "keyboard_arrow_down";
             opened = false;
         }
-
-
     });
+
+    $('ul.tabs').tabs();
 });
 
 
@@ -64,8 +64,6 @@ function getInfo() {
 
 }
 
-
-
 function checkLoggedUser() {
     var pageSplit = location.pathname.split('/');
     var pageName = pageSplit[pageSplit.length - 1];
@@ -80,7 +78,6 @@ function checkLoggedUser() {
 }
 
 checkLoggedUser();
-
 
 getInfo();
 
@@ -167,8 +164,3 @@ function drawLine(points, dates) {
         }
     });
 }
-
-$(document).ready(function () {
-    // $('ul.tabs').tabs('select_tab', 'tab_id');
-    $('ul.tabs').tabs();
-});

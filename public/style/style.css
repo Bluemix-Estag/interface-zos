@@ -1,10 +1,11 @@
 html {
     font-family: GillSans, Calibri, Trebuchet, sans-serif;
-  }
+  } 
  body {
-     overflow-y: hidden !important;
      background-color: #303030;
  }
+
+ 
 
  .tabs {
      background-color: #6a1b9a;
@@ -12,70 +13,6 @@ html {
 
  .tabs li {
      color: white;
- }
-
- #test-swipe-2>div {
-     display: flex;
-     margin-top: 15px !important;
-     margin-bottom: 10px !important;
-     justify-content: space-around;
-     flex-direction: column;
-     height: 30% !important;
-    
- }
-
- #test-swipe-3>div {
-     display: flex;
-     margin-top: 0px !important;
-     margin-bottom: 20px !important;
-     justify-content: space-around;
-     flex-direction: column;
-     height: 30% !important;
- }
-
- #card-rate1{
-     display: flex;
-     margin-top: 150px !important;
-     justify-content: space-around;
-     flex-direction: column;
- }
-
-
-
-
-
- #test-swipe-2 .card-content {
-     height: 120px;
- }
-
- .card {
-     margin: 1% 10% !important;
-     width: 80% !important;
-     background-color: white !important;
- }
-
- #card-conta {
-     margin-top: 10px !important;
-     background-color: white !important;
-     height: 240px !important;
- }
-
- #card-rate {
-     background-color: white !important;
-     margin-top: 10px !important;
-     margin-bottom: 0 !important;
-     height: 240px !important;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center !important;
-     ;
- }
-
- #card-title1 {
-     text-align: center !important;
-     margin-bottom: 20px !important;
-     margin-top: 10px !important;
  }
 
  #sentiment_icon {
@@ -105,73 +42,19 @@ html {
      color: #6a1b9a;
  }
 
- #card-graph {
-     background-color: white !important;
- }
-
- .canvas-holder {
-     width: 15%;
- }
-
-.line-holder{
-    display: flex !important;
-    align-content: center;
-    justify-content: center;
-}
-
-.canvas-holder-line{
-    width: 50%;
-}
- 
- @media (max-width: 760px) {
-     .canvas-holder {
-         width: 55% !important;
-     }
-     .canvas-holder-line{
-        width: 120%;
-     }
+ #reload{
+     position: absolute;
+     right: 1px !important;
+     top: 1px !important;
  }
 
 
-.emprestimo::-moz-placeholder , .input-field::-moz-placeholder{
-
-    text-align: center;
-
-    color: black;
-
-}
-.emprestimo::-webkit-input-placeholder , .input-field::-webkit-input-placeholde{
-
-    text-align: center;
-
-    color: black;
-
-}
-.emprestimo::-ms-input-placeholder , .input-field::-ms-input-placeholder{
-
-    text-align: center;
-
-    color: black;
-
-}
-.emprestimo::-moz-placeholder , .input-field::-moz-placeholder{
-
-    text-align: center;
-
-    color: black;
-
-}
-.emprestimo::-webkit-input-placeholder , .input-field::-webkit-input-placeholder {
-
-    text-align: center;
-
-    color: black;
-
-}
-.emprestimo::-ms-input-placeholder, .input-field::-ms-input-placeholder{
-
-    text-align: center;
-
-    color: black;
-
+ .style14 { 
+  border: 0; 
+  height: 1px; 
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  width: 40% !important;
 }

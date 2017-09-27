@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="/style/materialize.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link href="/style/style.css" rel="stylesheet" />
@@ -15,167 +15,131 @@
 </head>
 
 <body>
-    <div class="page-bodys">
+    <div>
 
         <ul id="tabs-swipe-demo" class="tabs">
-            <li class="tab col s3"><a href="#test-swipe-1" class="active" style="color:white;"><i class="material-icons">trending_up</i></a></li>
-            <li class="tab col s3"><a href="#test-swipe-2" style="color:white;"><i class="material-icons">account_balance_wallet</i></a></li>
-            <li class="tab col s3"><a href="#test-swipe-3" style="color:white;"><i class="material-icons">info_outline</i></a></li>
-            <li class="tab col s3 right"><a href="#test-swipe-3" onclick="logout()" style="color:white;"><i class="material-icons">exit_to_app</i></a></li>
-
+            <li class="tab col s3"><a href="#cics" class="active" style="color:white;"><i class="material-icons">trending_up</i></a></li>
+            <li class="tab col s3"><a href="#balance" style="color:white;"><i class="material-icons">account_balance_wallet</i></a></li>
+            <li class="tab col s3"><a href="#rate" style="color:white;"><i class="material-icons">info_outline</i></a></li>
+            <li class="tab col s3 right"><a href="#" onclick="logout()" style="color:white;"><i class="material-icons">exit_to_app</i></a></li>
         </ul>
-        <div id="test-swipe-1">
 
+
+        <div class="row"><a href="#"><i class="material-icons right white-text hide-on-small-only" style="cursor: pointer;" onclick="reloadData()">refresh</i></a></div>
+
+
+        <div id="cics">
             <div class="row">
-                <div class="col s12 m10 offset-m1 ">
-                    <div class="card-panel " style="display:flex !important;flex-direction:column;justify-content:center !important;align-items:center !important;">
-                        <span class="card-title" id="card-title1">Uso</span>
-                        <div class="canvas-holder" id="canvas_div">
-                            <canvas id="myChart"></canvas>
-                        </div>
-                        <div class="progress" style="background-color: grey !important; width: 60%;">
-                            <div class="determinate" style="width:100%; background-color:#6a1b9a !important;" id="valor-progresso"></div>
+
+                <div class="col s8 offset-s2 m3">
+                    <div class="card">
+                        <div class="card-content black-text">
+                            <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadTransactions()">refresh</i></a>
+                            <span class="card-title center">Total Transações</span>
+                            <p class="flow-text center purple-text" id="total_transactions">
+                            </p>
                         </div>
                     </div>
                 </div>
+
+                <div class="col s8 offset-s2 m3">
+                    <div class="card">
+                        <div class="card-content black-text">
+                            <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadPrograms()">refresh</i></a>
+                            <span class="card-title center">Programas em uso</span>
+                            <p class="flow-text purple-text center" id="total_programs">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col  s8 offset-s2  m3">
+                    <div class="card">
+                        <div class="card-content black-text">
+                            <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadCpu()">refresh</i></a>
+                            <span class="card-title center">Transações da CPU</span>
+                            <p class="flow-text purple-text center" id="cpu_time">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col  s8 offset-s2  m3">
+                    <div class="card">
+                        <div class="card-content black-text">
+                            <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadCpuTotal()">refresh</i></a>
+                            <span class="card-title center">Tempo total de CPU</span>
+                            <p class="flow-text purple-text center" id="total_cpu_time">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+            <hr class="style14">
+        </div>
+
+
+
+        <div id="balance">
             <div class="row">
-                <div class="col s12 m10 offset-m1   ">
-
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li>
-                            <div class="collapsible-header " style="text-align:center"><i class="material-icons" style="color:#6a1b9a;">trending_up</i>Histórico do Dia
-                                <a href="#" id="arrow" style="color: #6a1b9a !important"><i class="material-icons right">keyboard_arrow_down</i></a>
-                            </div>
-                            <div class="collapsible-body " id="card-graph">
-                                <div class="line-holder">
-                                    <div class="canvas-holder-line">
-                                        <canvas id="lineChart"></canvas>
-
-                                    </div>
-                                </div>
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="test-swipe-2">
-
-                <!--<div class="card">
-                    <div class="card-content" id="card-conta">
-                        <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
-                        <div class="response">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">supervisor_account</i>
-                                <input id="conta" type="text" class="validate">
-                                <label for="icon_prefix">Conta</label>
-                            </div>
-                            <div class="input-field col s4 offset-s4">
-                                <i class="material-icons prefix"></i>
-                                <button class="btn waves-effect waves-light" type="submit" name="action" id="submit-btn" >Enviar<i class="material-icons right">send</i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-                <div class="row">
-                <div class="col s12 m12">
-                <div class="card" id="card_do_saldo"></div>
-                </div>
-                </div>
-            </div>
-            <div id="test-swipe-3">
-                <div class="card" style="margin-top: 10px !important;">
-                    <div class="card-content" id="card-conta">
-                        <span class="card-title activator grey-text text-darken-4" id="card-title1">Sua Conta</span>
-                        <p class="z-depth-1" style="width: 150px !important;" id="valor_conta">Conta:
-                            <a href="#" id="valor_conta"></a>
-                        </p>
-                        <div id="numero_conta">
-                             <div class="row">
-                                <div class="input-field col s12 black-text center">
-                                    <input  id="valor_emprestimo" type="text" class="validate" placeholder="Valor do empréstimo" class="emprestimo">
-                                    <button class="btn waves-effect waves-light blue" type="submit" name="action" onclick="getBtn()">Submit
-                                        <i class="material-icons right">send</i>
-                                    </button>
-                                </div>
-                            </div>
+                <div class="col s8 offset-s2 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-content black-text">
+                            <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadSaldo()">refresh</i></a>
+                            <span class="card-title center">Saldo da conta</span>
+                            <p class="flow-text center purple-text" id="total_balance">
+                                R$<span id="valor-saldo"></span>
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="card" id="card-rate1"></div>
             </div>
         </div>
 
+
+
+        <div id="rate">
+            <div class="row">
+                <div class="col s8 offset-s2 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-content black-text">
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input id="loan_value" type="text" class="validate" oninput="enableLoan()">
+                                            <label for="loan_value">Valor Empréstimo</label>
+                                        </div>
+                                        <div class="col s12 center">
+                                            <button class="btn purple" id="loanBtn" onclick="getCreditRate()" disabled>Pedir Crédito</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <hr class="style14">
+            <br>
+            <div class="row">
+                <div class="col s8 offset-s2 m8 offset-m2" id="loan_result"></div>
+            </div>
+        </div>
+
+
+
         <script src="/scripts/util.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+        <script src="/scripts/methods.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
-        <script src="/scripts/functions.js"></script>
-        <script>
-            $(document).ready(function () {
-                // var socket = io('http://localhost:3000');
-                var mainframe = $("#valor-progresso");
-                // socket.on('data', function () {
-                //     // getMainFrameInfo();
-                //     callProgress();
-                //     callHistory();
-                //     console.log('ta entrando pelo menos');
-                // });
 
-                // socket.on('history', function (data) {
-                //     var valores = data;
-                //     var points = valores.map(function (valor) {
-                //         return valor[0] / 10;
-                //     });
-                //     var dates = valores.map(function (valor) {
-                //         return valor[1]
-                //     });
-                //     drawLine(points, dates);
-                // });
 
-                // socket.on('progress', function (data) {
-                //     var progress = data;
-                //     // alert(progress);
-                //     drawProgress(progress);
-                // });
 
-                callHistory();
-                callProgress();
-
-                function callHistory() {
-                    xhrGet('/history', function (response) {
-                        var valores = response;
-                        var points = valores.map(function (valor) {
-                            return valor[0] / 10;
-                        });
-                        var dates = valores.map(function (valor) {
-                            return valor[1]
-                        });
-                        drawLine(points, dates);
-                        setTimeout(function () {
-                            callHistory();
-                        }, 15000);
-                    }, function (err) {
-                        console.log(err);
-                    });
-
-                }
-
-                function callProgress() {
-                    xhrGet('/progress', function (response) {
-                        console.log('/Progress ',progress);
-                        var progress = response;
-                        drawProgress(progress);
-                        setTimeout(function () {
-                            callProgress();
-                        }, 60000);
-                    }, function (err) {
-                        console.log(error);
-                    });
-                }
-                
-            });
-        </script>
 </body>
 
 </html>

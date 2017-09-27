@@ -186,134 +186,81 @@ app.get('/getInfo', function (req, res) {
 
 
 app.get('/getCICSStatus', function (req, res) {
-    var data = Math.ceil(Math.random() * 100);
+    var options = {
+        method: 'GET',
+        url: 'https://api.us.apiconnect.ibmcloud.com/bluemix-brasil-demos/sb/cicsinfo/obter',
+        headers: {
+            "x-ibm-client-id": '9af11b89-1596-43fb-9eb3-9e8c48cda4cf'
+        }
+    }
 
-    res.send({
-        status: data
-    });
-});
+    function callback(error,response,body){
+        if(!error && response.statusCode == 200){
+            var info = JSON.parse(body);
+            res.send(info);
+        }else{
+            console.log(error);
+            res.send(error);
+        }
+    }
+    request(options,callback);
+})
 
 app.get('/getSaldo', function (req, res) {
-    var acc = req.query.conta;
+    console.log('Entrou no get saldo');
+    var acc = (req.query.conta != '')?req.query.conta:null;
 
     //call mainframe api and return balance
-});
-
-app.get('/getCredito', function (req, res) {
-    var acc = req.query.conta;
-
-
-    //call mainframe api and return credit rate
-});
-// Socket IO
-app.get('/info', function (req, res) {
-    console.log('funcionou o /info');
-    database.get('main', {
-        revs_info: true
-    }, function (err, doc) {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(JSON.stringify(doc));
-            var valor = doc.status.valor;
-            // console.log("TA AQUI OH" + valor[1][0]);
-            res.status(200).json({
-                valor: valor[valor.length - 1][0],
-                date: valor[valor.length - 1][1],
-                status: true
-            });
+    var options = {
+        method: 'GET',
+        url: 'https://api.us.apiconnect.ibmcloud.com/bluemix-brasil-demos/sb/contacorrente/consulta?nrConta='+acc,
+        headers: {
+            "x-ibm-client-id": '9af11b89-1596-43fb-9eb3-9e8c48cda4cf' 
         }
-    });
-});
+    }
 
-// var globalSocket;
-app.post('/inserted', function (req, res) {
-    console.log("Houve mudança no banco");
-    // if (globalSocket != null) callSocket(globalSocket);
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json({
-        status: true
-    });
-});
-
-
-app.get('/history', function (req, res) {
-    database.get('main', {
-        revs_info: true
-    }, function (err, doc) {
-        if (err) {
-            //Error handle later
-            res.setHeader('Content-Type', 'application/json');
-            res.status(500).json({
-                error: true,
-                description: "Internal server error"
-            });
-        } else {
-            if (doc.status.valor.length > 5) {
-                var valor = [];
-                var mainframe = doc.status.valor;
-
-
-                for(var i = mainframe.length-1;i>=mainframe.length-5;i--){
-                    valor.push(mainframe[i]);
-                }
-
-                res.setHeader('Content-Type', 'application/json');
-                res.status(200).json(valor);
-
-            } else {
-                var valor = doc.status.valor;
-                console.log("Menor que 5:" + valor);
-                res.setHeader('Content-Type', 'application/json');
-                res.status(200).json(valor);
+    function callback(error, response,body){
+        if(!error && response.statusCode == 200){
+            var info = JSON.parse(body);
+            console.log(info);
+            if(info['resposta']){
+                res.send(info['resposta']['MSGS_CLISALDO']);
             }
+        }else{
+            res.send(error);
+            console.log(error);
         }
+    }
+    request(options,callback);
+})
+
+app.post('/pushDB', function(req,res){
+    var info = req.body.info;
+    console.log('INFO: ' + JSON.stringify(info));
+
+    database.get('main', {revs_info: true}, function(error, doc){
+        var statusArr = []
+        statusArr = doc['status']['valor']
+        statusArr.push(info);
+        database.insert(doc, 'main', function(err, body){
+            console.log('You have updated the document');
+            console.log(body);
+        })
     })
+})
 
-});
-
-app.get('/progress', function (req, res) {
-    database.get('main', {
-        revs_info: true
-    }, function (err, doc) {
-        if (err) {
-            //Error handle later
-            res.setHeader('Content-Type', 'application/json');
-            res.status(500).json({
-                error: true,
-                description: "Internal server error"
-            });
-        } else {
-            var valor = doc.status.valor[doc.status.valor.length - 1][0];
-            // globalSocket.emit('progress', valor);
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(valor);
-        }
+app.get('/getDB', function(req,res){
+    database.get('main', {revs_info: true}, function(err,result){
+        console.log(result['status']['valor']);
+        res.send(result['status']['valor']);
     })
-});
+})
 
 
-
-
-
-
-/**** SOCKET ****/
-// socketIO.on('connection', function (socket) {
-//     globalSocket = socket;
-//     console.log('a user connected');
-
-//     socket.on('disconnect', function () {
-//         console.log('user disconnected');
-//     });
-//     // callSocket(socket);
-//     // callHistory();
-// });
-
-// function callSocket(socket) {
-//     socket.emit('data');
-// }
 
 
 http.listen(app.get('port'), '0.0.0.0', function () {
     console.log('Express server listening on port ' + app.get('port'));
-});
+})
+
+
