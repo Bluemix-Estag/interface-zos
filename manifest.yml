@@ -3,8 +3,8 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: zos-dashboard
-  host: zos-dashboard
+  name: zos
+  host: zos
   disk_quota: 1024M
   services:
   - interface-zos-cloudantNoSQLDB

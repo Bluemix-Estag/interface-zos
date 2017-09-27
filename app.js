@@ -118,9 +118,9 @@ app.post('/login', function (req, res) {
             var password = req.body.password;
             var exists = false;
             var userFound;
-            console.log('Received data: ', login);
+            // console.log('Received data: ', login);
             for (var user in doc.users) {
-                console.log(doc.users[user]);
+                // console.log(doc.users[user]);
                 if (doc.users[user].username === login) {
                     exists = true;
                     userFound = user;
@@ -207,8 +207,9 @@ app.get('/getCICSStatus', function (req, res) {
 })
 
 app.get('/getSaldo', function (req, res) {
-    console.log('Entrou no get saldo');
+    
     var acc = (req.query.conta != '')?req.query.conta:null;
+    console.log('Entrou no get saldo' + acc);
 
     //call mainframe api and return balance
     var options = {
@@ -236,7 +237,6 @@ app.get('/getSaldo', function (req, res) {
 
 app.post('/pushDB', function(req,res){
     var info = req.body.info;
-    console.log('INFO: ' + JSON.stringify(info));
 
     database.get('main', {revs_info: true}, function(error, doc){
         var statusArr = []
@@ -244,14 +244,29 @@ app.post('/pushDB', function(req,res){
         statusArr.push(info);
         database.insert(doc, 'main', function(err, body){
             console.log('You have updated the document');
-            console.log(body);
+            // console.log(body);
+            res.send('You have updated the document.');
         })
     })
 })
 
 app.get('/getDB', function(req,res){
     database.get('main', {revs_info: true}, function(err,result){
-        console.log(result['status']['valor']);
+        
+        res.send(result['status']['valor']);
+    })
+})
+
+app.get('/getDBTransactions', function(req,res){
+    database.get('main', {revs_info: true}, function(err,result){
+        
+        res.send(result['status']['valor']);
+    })
+})
+
+app.get('/getDBPrograms', function(req,res){
+    database.get('main', {revs_info: true}, function(err,result){
+        console.log('entrou no dbprograms');
         res.send(result['status']['valor']);
     })
 })

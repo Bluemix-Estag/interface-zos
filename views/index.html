@@ -78,6 +78,36 @@
             </div>
 
             <hr class="style14">
+
+
+            <div class="row">
+                <div class="col s8 offset-s2 m12 center">
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                            <div class="collapsible-header"><img src="/images/chart.png" width="auto" height="20px" style="margin-right: 25px;">Histórico
+                                de Transações</div>
+                            <div class="collapsible-body" style="background-color: white;">
+                                <div class="collapsible-content">
+                                    <div class="chart-container" >
+                                        <canvas id="transactionsChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><img src="/images/counter.png" width="auto" height="20px" style="margin-right: 25px;">Histórico
+                                de Programas em Uso</div>
+                            <div class="collapsible-body" style="background-color: white;">
+                                <div class="collapsible-content">
+                                    <div class="chart-container" >
+                                        <canvas id="programsChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
 
@@ -108,7 +138,7 @@
                             <div class="row">
                                 <div class="col s12">
                                     <div class="row">
-                                        <div class="input-field col s12">
+                                        <div class="input-field col s12" id="teste">
                                             <input id="loan_value" type="text" class="validate" oninput="enableLoan()">
                                             <label for="loan_value">Valor Empréstimo</label>
                                         </div>

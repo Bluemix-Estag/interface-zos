@@ -19,9 +19,9 @@ function xhrGet(url, callback, errback){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4){
 			if(xhr.status == 200){
-				callback(JSON.parse(xhr.responseText));
+				callback((xhr.responseText));
 			}else{
-				errback(JSON.parse(xhr.responseText));
+				errback((xhr.responseText));
 			}
 		}
 	};
