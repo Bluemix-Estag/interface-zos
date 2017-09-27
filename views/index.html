@@ -31,44 +31,44 @@
         <div id="cics">
             <div class="row">
 
-                <div class="col s8 offset-s2 m3">
+                <div class="col s12 m3">
                     <div class="card">
                         <div class="card-content black-text">
                             <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadTransactions()">refresh</i></a>
-                            <span class="card-title center">Total Transações</span>
+                            <span class="card-title center custom-title-size">Total Transações</span>
                             <p class="flow-text center purple-text" id="total_transactions">
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="col s8 offset-s2 m3">
+                <div class="col s12 m3">
                     <div class="card">
                         <div class="card-content black-text">
                             <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadPrograms()">refresh</i></a>
-                            <span class="card-title center">Programas em uso</span>
+                            <span class="card-title center custom-title-size">Programas em uso</span>
                             <p class="flow-text purple-text center" id="total_programs">
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="col  s8 offset-s2  m3">
+                <div class="col s12  m3">
                     <div class="card">
                         <div class="card-content black-text">
                             <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadCpu()">refresh</i></a>
-                            <span class="card-title center">Transações da CPU</span>
+                            <span class="card-title center custom-title-size">Transações da CPU</span>
                             <p class="flow-text purple-text center" id="cpu_time">
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="col  s8 offset-s2  m3">
+                <div class="col s12  m3">
                     <div class="card">
                         <div class="card-content black-text">
                             <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadCpuTotal()">refresh</i></a>
-                            <span class="card-title center">Tempo total de CPU</span>
+                            <span class="card-title center custom-title-size">Tempo total de CPU</span>
                             <p class="flow-text purple-text center" id="total_cpu_time">
                             </p>
                         </div>
@@ -81,7 +81,7 @@
 
 
             <div class="row">
-                <div class="col s8 offset-s2 m12 center">
+                <div class="col s12 m12 center">
                     <ul class="collapsible" data-collapsible="accordion">
                         <li>
                             <div class="collapsible-header"><img src="/images/chart.png" width="auto" height="20px" style="margin-right: 25px;">Histórico
@@ -114,11 +114,11 @@
 
         <div id="balance">
             <div class="row">
-                <div class="col s8 offset-s2 m8 offset-m2">
+                <div class="col s12 m8 offset-m2">
                     <div class="card">
                         <div class="card-content black-text">
                             <a href="#"><i class="material-icons right black-text" id="reload" style="cursor: pointer;" onclick="reloadSaldo()">refresh</i></a>
-                            <span class="card-title center">Saldo da conta</span>
+                            <span class="card-title center custom-title-size">Saldo da conta</span>
                             <p class="flow-text center purple-text" id="total_balance">
                                 R$<span id="valor-saldo"></span>
                             </p>
@@ -132,7 +132,7 @@
 
         <div id="rate">
             <div class="row">
-                <div class="col s8 offset-s2 m8 offset-m2">
+                <div class="col s12 m8 offset-m2">
                     <div class="card">
                         <div class="card-content black-text">
                             <div class="row">
@@ -140,7 +140,7 @@
                                     <div class="row">
                                         <div class="input-field col s12" id="teste">
                                             <input id="loan_value" type="text" class="validate" oninput="enableLoan()">
-                                            <label for="loan_value">Valor Empréstimo</label>
+                                            <label for="loan_value" class="custom-title-size">Valor Empréstimo</label>
                                         </div>
                                         <div class="col s12 center">
                                             <button class="btn purple" id="loanBtn" onclick="getCreditRate()" disabled>Pedir Crédito</button>
@@ -157,7 +157,7 @@
             <hr class="style14">
             <br>
             <div class="row">
-                <div class="col s8 offset-s2 m8 offset-m2" id="loan_result"></div>
+                <div class="col s12 m8 offset-m2" id="loan_result"></div>
             </div>
         </div>
 

@@ -64,6 +64,23 @@ function getInfo() {
 
 }
 
+function sessionCheck(name) {
+	
+	if (typeof(Storage) !== "undefined") {
+		if(sessionStorage.getItem(name)){
+			return true;
+		}
+		return false;
+		// return sessionStorage.user != null && sessionStorage.user != '' && sessionStorage.user !== "undefined";
+	}
+	else {
+		//No storage , use cookie..
+		return checkCookie(name);
+	}
+}
+
+
+
 function checkLoggedUser() {
     var pageSplit = location.pathname.split('/');
     var pageName = pageSplit[pageSplit.length - 1];
@@ -164,3 +181,4 @@ function drawLine(points, dates) {
         }
     });
 }
+

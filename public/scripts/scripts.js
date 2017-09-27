@@ -12,7 +12,10 @@ function getValidation() {
             setSession("user",data.login);            
             window.location = '/index';
         } else {
-            alert(JSON.stringify(response));
+            alert('Wrong username');
+            setTimeout(function(){
+                window.location = '/';
+            }, 2000);
         }
     }, function (err) {
         alert(err);

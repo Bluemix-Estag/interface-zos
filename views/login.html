@@ -123,12 +123,15 @@
                     setSession("user", data.login);
                     window.location = '/index';
                 } else {
+                    console.log('Caiu nesse caso');
+                    document.getElementById('username').value = '';
+                    document.getElementById('icon_password').value = '';
+                    alert('Usuário incorreto');
                     btn.style.paddingTop = '0px';
                 }
             }, function(err) {
-                btn.style.paddingTop = '0px';
-                btn.innerHTML = 'Submit<i class="material-icons right">send</i>'
-                alert(err);
+                alert('Usuário Inválido');
+                window.location = '/';
             })
         }
 

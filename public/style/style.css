@@ -82,3 +82,7 @@ html {
  #teste input[type=text]:focus+label {
      color: #6a1b9a;
  }
+
+ .custom-title-size{
+     font-size: 10pt !important;
+ }
